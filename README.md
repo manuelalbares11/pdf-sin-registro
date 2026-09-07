@@ -75,6 +75,28 @@ añadir texto.
 
 ---
 
+## Páginas legales
+
+También se generan desde datos, con el mismo comando:
+
+```
+data/legales.json              ← datos del titular + texto de las tres páginas
+templates/legal.template.html  ← la carcasa compartida
+```
+
+Sólo hay que rellenar el bloque `titular` de `data/legales.json` (nombre o
+razón social, NIF, domicilio, correo, alojamiento, red publicitaria y ciudad
+de jurisdicción) y volver a ejecutar el generador: produce `aviso-legal.html`,
+`privacidad.html` y `cookies.html`. Los huecos pendientes van entre corchetes
+(`[NIF o CIF]`) y **el generador avisa por consola de los que queden sin
+rellenar**. Las tres páginas son `noindex` y quedan fuera del sitemap a
+propósito.
+
+Los textos están redactados para esta web en concreto —LSSI art. 10, RGPD y
+LOPDGDD, art. 22.2 LSSI para cookies— con el punto central de que los
+documentos no se transmiten ni se tratan. No son asesoramiento jurídico:
+conviene que los revise un profesional antes de publicar.
+
 ## Publicidad
 
 Sólo hay **dos huecos**, marcados y vacíos:

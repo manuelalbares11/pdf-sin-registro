@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}} | {{BRAND}}</title>
+<meta name="description" content="{{META}}">
+<link rel="canonical" href="{{CANONICAL}}">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#d93a2b" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f0f14" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="styles.css?v={{VER}}">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M9 15h6"/><path d="M9 11h2"/></svg>
+      {{BRAND}}
+    </a>
+    <nav class="nav"><a href="index.html">Volver a la herramienta</a></nav>
+  </div>
+</header>
+
+<main>
+  <div class="wrap wrap--narrow">
+    <section class="section prose">
+      <h1>{{H1}}</h1>
+      <p><strong>Última actualización:</strong> {{FECHA}}</p>
+{{CUERPO}}
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <span>&copy; <span data-year>2026</span> {{BRAND}}</span>
+    <nav>
+      <a href="index.html">Inicio</a>
+      <a href="privacidad.html">Privacidad</a>
+      <a href="aviso-legal.html">Aviso legal</a>
+      <a href="cookies.html">Cookies</a>
+    </nav>
+  </div>
+</footer>
+
+<script defer src="lib/manifest.js?v={{VER}}"></script>
+<script defer src="main.js?v={{VER}}"></script>
+</body>
+</html>

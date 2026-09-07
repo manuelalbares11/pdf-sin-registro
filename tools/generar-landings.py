@@ -29,6 +29,8 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, "data", "landings.json")
 TPL = os.path.join(ROOT, "templates", "landing.template.html")
+DATA_LEGAL = os.path.join(ROOT, "data", "legales.json")
+TPL_LEGAL = os.path.join(ROOT, "templates", "legal.template.html")
 
 MODOS = ("organizar", "unir", "comprimir", "firmar")
 OBLIGATORIOS = ("slug", "nav", "corto", "modo", "title", "h1", "sub",
@@ -140,6 +142,63 @@ def jsonld(obj):
     return json.dumps(obj, ensure_ascii=False, separators=(",", ":"))
 
 
+
+def generar_legales(marca, dominio, version):
+    """Genera aviso-legal.html, privacidad.html y cookies.html sustituyendo
+    los datos del titular. Solo hay que rellenar 'titular' en
+    data/legales.json: el texto vive en ese mismo archivo."""
+    datos = json.loads(leer(DATA_LEGAL))
+    t = datos["titular"]
+
+    registro = t.get("registro", "").strip()
+    linea_registro = ("<li><strong>Datos registrales:</strong> %s</li>" % esc_attr(registro)) if registro else ""
+
+    campos = {
+        "{{BRAND}}": marca,
+        "{{T_NOMBRE}}": t["nombre"],
+        "{{T_NIF}}": t["nif"],
+        "{{T_DIRECCION}}": t["direccion"],
+        "{{T_EMAIL}}": t["email"],
+        "{{T_DOMINIO}}": dominio,
+        "{{T_REGISTRO_LINEA}}": linea_registro,
+        "{{T_HOSTING}}": t["hosting"],
+        "{{T_HOSTING_UBICACION}}": t["hostingUbicacion"],
+        "{{T_PUBLICIDAD}}": t["publicidad"],
+        "{{T_JURISDICCION}}": t["jurisdiccion"],
+    }
+
+    tpl = leer(TPL_LEGAL)
+    pendientes = set()
+    for p in datos["paginas"]:
+        cuerpo = p["cuerpo"]
+        meta = p["meta"]
+        for k, v in campos.items():
+            cuerpo = cuerpo.replace(k, v)
+            meta = meta.replace(k, v)
+        html = tpl
+        for k, v in {
+            "{{BRAND}}": esc_attr(marca),
+            "{{VER}}": version,
+            "{{TITLE}}": esc_attr(p["title"]),
+            "{{H1}}": esc_attr(p["h1"]),
+            "{{META}}": esc_attr(meta),
+            "{{CANONICAL}}": dominio + "/" + p["slug"] + ".html",
+            "{{FECHA}}": esc_attr(datos.get("fecha", "")),
+            "{{CUERPO}}": cuerpo,
+        }.items():
+            html = html.replace(k, v)
+
+        pendientes.update(re.findall(r"\[[A-ZÁÉÍÓÚÑ][^\]]{3,}\]", html))
+        escribir(os.path.join(ROOT, p["slug"] + ".html"), html)
+        print("  [ok] %-52s %d KB" % (p["slug"] + ".html", len(html) // 1024))
+
+    if pendientes:
+        print("\n  AVISO: quedan datos del titular sin rellenar en data/legales.json:")
+        for x in sorted(pendientes):
+            print("    - " + x)
+    return len(datos["paginas"])
+
+
 def generar():
     datos = json.loads(leer(DATA))
     errores = validar(datos)
@@ -150,6 +209,7 @@ def generar():
         return 1
 
     if "--check" in sys.argv:
+        json.loads(leer(DATA_LEGAL))   # revienta pronto si el JSON legal esta roto
         print("OK: %d paginas validas." % len(datos["paginas"]))
         return 0
 
@@ -242,11 +302,16 @@ def generar():
                + "\n".join(filas) + "\n</urlset>\n")
     escribir(os.path.join(ROOT, "sitemap.xml"), sitemap)
 
+    # paginas legales (noindex: fuera del sitemap a proposito)
+    print("")
+    n_legales = generar_legales(marca, dominio, version)
+
     robots = ("User-agent: *\nAllow: /\n\n"
               "Sitemap: %s/sitemap.xml\n" % dominio)
     escribir(os.path.join(ROOT, "robots.txt"), robots)
 
-    print("\n%d paginas + sitemap.xml + robots.txt generados." % len(generadas))
+    print("\n%d landings + %d paginas legales + sitemap.xml + robots.txt generados."
+          % (len(generadas), n_legales))
     return 0
 
 
