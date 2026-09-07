@@ -15,7 +15,8 @@ Todo el procesamiento ocurre en el cliente:
 | Pieza | Para qué | Licencia |
 |---|---|---|
 | `pdf-lib` 1.17.1 (UMD) | montar el PDF final: copiar páginas, girar, incrustar texto y firmas | MIT |
-| `pdf.js` 6.1.200 (ESM + worker) | leer el PDF, pintar miniaturas y rasterizar al comprimir | Apache-2.0 |
+| `pdf.js` 6.1.200 (ESM + worker) | leer el PDF, pintar miniaturas y rasterizar al comprimir o convertir a imagen | Apache-2.0 |
+| `JSZip` 3.10.1 (UMD) | empaquetar varios archivos de salida (dividir, PDF a imagen) | MIT |
 
 Ambas están **vendorizadas** en `lib/vendor/` y se sirven desde el propio
 dominio: la web no depende de ningún CDN en tiempo de ejecución, y no hace
@@ -28,6 +29,24 @@ ninguna petición de red con el contenido de tus documentos.
 - `lib/vendor/pdfjs/compat.mjs` añade `Map.prototype.getOrInsert(Computed)`,
   que pdf.js 6.1.200 da por hecho y que muchos navegadores todavía no tienen.
   Se instala también dentro del worker vía `worker-boot.mjs`.
+
+### Una sola tubería para siete modos
+
+Todo pasa por el mismo sitio: la rejilla de páginas se **monta** en un PDF con
+`pdf-lib` y después se **post-procesa** según el modo.
+
+```
+páginas (de PDF o de imagen) → montar → ┬─ tal cual        → PDF
+                                        ├─ rasterizar      → PDF comprimido
+                                        ├─ cortar          → varios PDF → ZIP
+                                        └─ pintar páginas  → JPG/PNG    → ZIP
+```
+
+Una imagen suelta es una página más: se le asigna tamaño de página (A4 con
+margen, o el tamaño real a 96 ppp) y se incrusta sin recomprimir si es JPG o
+PNG. Por eso se pueden mezclar fotos y PDF en el mismo documento, y por eso
+girar, reordenar, firmar o dividir funcionan igual con unas y otros. Convertir
+imágenes a PDF ni siquiera descarga `pdf.js`.
 
 ### La compresión, sin marketing
 
@@ -69,9 +88,10 @@ Para conectar una base de datos real basta con que vuelque ese mismo JSON
 (o que el script lea una tabla) y volver a ejecutarlo: la estructura, el
 enlazado interno y el sitemap se rehacen solos.
 
-Intenciones cubiertas hoy: unir sin marca de agua, comprimir para enviar por
-correo, juntar varios PDF, firmar, reordenar, eliminar páginas, girar páginas y
-añadir texto.
+Intenciones cubiertas hoy (16 páginas): editar, unir sin marca de agua, juntar
+varios PDF, unir PDF pesados, dividir en páginas separadas, comprimir para
+correo, comprimir sin perder calidad, firmar, añadir texto, JPG a PDF, PDF a
+JPG, reordenar, extraer páginas, eliminar páginas y girar páginas.
 
 ---
 

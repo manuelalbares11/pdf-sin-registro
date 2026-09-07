@@ -23,12 +23,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="styles.css?v=20260907">
+<link rel="stylesheet" href="styles.css?v=20260908">
 
 <!-- TODO (propietario): pega aquí tu banner de consentimiento de cookies (CMP)
      antes de activar AdSense. Esta web no carga ningún script de terceros. -->
 
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Unir PDF pesados, gratis","url":"https://pdfsinregistro.com/unir-pdf-pesados-gratis.html","description":"Une PDF pesados gratis y sin registro. Al procesarse en tu navegador no hay límite de subida ni esperas: la velocidad la pone tu equipo, no la red.","applicationCategory":"UtilitiesApplication","operatingSystem":"Cualquiera con navegador web","browserRequirements":"Requiere JavaScript","inLanguage":"es-ES","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"featureList":["Editor de PDF completo","Editar PDF sin registro","Unir PDF sin marca de agua","Juntar varios PDF en uno","Unir PDF pesados","Comprimir PDF para correo","Comprimir sin perder calidad","Firmar PDF a mano","Añadir texto a un PDF","Reordenar páginas","Extraer páginas de un PDF","Eliminar páginas","Girar páginas"],"publisher":{"@type":"Organization","name":"PDF sin Registro","url":"https://pdfsinregistro.com/"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Unir PDF pesados, gratis","url":"https://pdfsinregistro.com/unir-pdf-pesados-gratis.html","description":"Une PDF pesados gratis y sin registro. Al procesarse en tu navegador no hay límite de subida ni esperas: la velocidad la pone tu equipo, no la red.","applicationCategory":"UtilitiesApplication","operatingSystem":"Cualquiera con navegador web","browserRequirements":"Requiere JavaScript","inLanguage":"es-ES","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"featureList":["Editor de PDF completo","Editar PDF sin registro","Unir PDF sin marca de agua","Juntar varios PDF en uno","Unir PDF pesados","Dividir PDF","Comprimir PDF para correo","Comprimir sin perder calidad","Firmar PDF a mano","Añadir texto a un PDF","Convertir JPG a PDF","PDF a JPG","Reordenar páginas","Extraer páginas de un PDF","Eliminar páginas","Girar páginas"],"publisher":{"@type":"Organization","name":"PDF sin Registro","url":"https://pdfsinregistro.com/"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Hay un límite de tamaño?","acceptedAnswer":{"@type":"Answer","text":"No hay un límite artificial de subida porque no hay subida. El límite real es la memoria de tu dispositivo: como referencia, unos 100 MB por archivo y 500 páginas en total."}},{"@type":"Question","name":"¿Por qué es más rápido que otras webs?","acceptedAnswer":{"@type":"Answer","text":"Porque no se sube ni se descarga nada. Te ahorras el tiempo de subida, la cola del servidor y la bajada del resultado."}},{"@type":"Question","name":"¿Qué pasa si se queda sin memoria?","acceptedAnswer":{"@type":"Answer","text":"El navegador puede ralentizarse o cerrar la pestaña. Cierra otras pestañas, trabaja en tandas más pequeñas y, si hace falta, comprime al exportar."}},{"@type":"Question","name":"¿Puedo unir y comprimir en el mismo paso?","acceptedAnswer":{"@type":"Answer","text":"Sí. Activa la casilla de compresión antes de generar el documento y tendrás las dos operaciones en una sola descarga."}},{"@type":"Question","name":"¿Funciona sin conexión?","acceptedAnswer":{"@type":"Answer","text":"Una vez cargada la página, el proceso no necesita internet: si pierdes la conexión, la herramienta sigue funcionando."}}]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://pdfsinregistro.com/"},{"@type":"ListItem","position":2,"name":"PDF pesados","item":"https://pdfsinregistro.com/unir-pdf-pesados-gratis.html"}]}</script>
 </head>
@@ -70,8 +70,11 @@
         <div class="modes" role="group" aria-label="Modo de la herramienta">
           <button type="button" data-mode="organizar" aria-pressed="false">Organizar</button>
           <button type="button" data-mode="unir" aria-pressed="false">Unir</button>
+          <button type="button" data-mode="dividir" aria-pressed="false">Dividir</button>
           <button type="button" data-mode="comprimir" aria-pressed="false">Comprimir</button>
           <button type="button" data-mode="firmar" aria-pressed="false">Firmar</button>
+          <button type="button" data-mode="imagen-a-pdf" aria-pressed="false">JPG&nbsp;→&nbsp;PDF</button>
+          <button type="button" data-mode="pdf-a-imagen" aria-pressed="false">PDF&nbsp;→&nbsp;JPG</button>
         </div>
       </div>
 
@@ -87,10 +90,10 @@
       <div class="only-idle">
         <label class="dropzone" id="dropzone" for="fileInput">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
-          <strong>Arrastra aquí tus PDF</strong>
-          <span>o pulsa para elegirlos en tu dispositivo</span>
-          <small>Uno o varios archivos · hasta 100&nbsp;MB cada uno · también puedes pegar con Ctrl+V</small>
-          <input type="file" id="fileInput" accept="application/pdf,.pdf" multiple hidden>
+          <strong id="dzTitle">Arrastra aquí tus PDF</strong>
+          <span id="dzSub">o pulsa para elegirlos en tu dispositivo</span>
+          <small id="dzHint">Uno o varios archivos · hasta 100&nbsp;MB cada uno · también puedes pegar con Ctrl+V</small>
+          <input type="file" id="fileInput" accept="application/pdf,.pdf,image/jpeg,image/png,image/webp" multiple hidden>
         </label>
       </div>
 
@@ -118,13 +121,50 @@
             <label for="optName">Nombre del archivo</label>
             <input type="text" id="optName" placeholder="documento.pdf" autocomplete="off">
           </div>
-          <div class="opt">
+          <div class="opt" id="compressBox">
             <label for="optCompress">Compresión</label>
             <label style="display:flex;gap:8px;align-items:center;font-size:.9rem;font-weight:500;color:var(--ink)">
               <input type="checkbox" id="optCompress"> Reducir el tamaño al exportar
             </label>
             <p class="hint">Perfecto para escaneados y para enviar por correo.</p>
           </div>
+
+          <div class="opt" id="splitOpts" hidden>
+            <label for="optSplitMode">Cómo separar</label>
+            <select id="optSplitMode">
+              <option value="paginas" selected>Cada página, un archivo</option>
+              <option value="rangos">Por rangos que yo indique</option>
+            </select>
+            <div id="rangeBox" hidden>
+              <label for="optRanges" style="margin-top:10px">Rangos</label>
+              <input type="text" id="optRanges" placeholder="1-3, 5, 8-" autocomplete="off">
+              <p class="hint">Sobre el orden que ves ahora. «8-» significa de la 8 al final.</p>
+            </div>
+          </div>
+
+          <div class="opt" id="imgOpts" hidden>
+            <label for="optImgFit">Tamaño de página de las imágenes</label>
+            <select id="optImgFit">
+              <option value="a4" selected>Ajustar a A4 con margen</option>
+              <option value="original">Tamaño real de la imagen</option>
+            </select>
+            <p class="hint">A4 para imprimir; tamaño real para capturas de pantalla.</p>
+          </div>
+
+          <div class="opt" id="rasterOpts" hidden>
+            <label for="optImgDpi">Resolución de salida</label>
+            <select id="optImgDpi">
+              <option value="96">Pantalla (96 ppp)</option>
+              <option value="150" selected>Alta (150 ppp)</option>
+              <option value="300">Máxima (300 ppp)</option>
+            </select>
+            <label for="optImgFormat" style="margin-top:10px">Formato</label>
+            <select id="optImgFormat">
+              <option value="jpg" selected>JPG (más ligero)</option>
+              <option value="png">PNG (sin pérdidas)</option>
+            </select>
+          </div>
+
           <div class="opt" id="compressOpts" hidden>
             <label for="optDpi">Calidad de compresión</label>
             <select id="optDpi">
@@ -143,7 +183,7 @@
       <!-- estado: done -->
       <div class="only-done">
         <div class="result">
-          <h3>Tu PDF está listo</h3>
+          <h3 id="resTitle">Tu PDF está listo</h3>
           <p class="sizes" id="resSizes"></p>
           <button type="button" class="btn btn--primary" id="resDownload">Descargar PDF</button>
           <div><a class="again" href="#" data-reset>Procesar otro documento</a></div>
@@ -238,8 +278,8 @@
         <a class="tool-link" href="editar-pdf-online-sin-registro.html"><b>Editar PDF sin registro</b><span>Todas las ediciones habituales en una sola pantalla.</span></a>
         <a class="tool-link" href="unir-pdf-gratis-sin-marca-de-agua.html"><b>Unir PDF sin marca de agua</b><span>Combina varios documentos en uno solo, sin logotipos añadidos.</span></a>
         <a class="tool-link" href="juntar-varios-pdf-en-uno-online.html"><b>Juntar varios PDF en uno</b><span>Varios documentos sueltos convertidos en un único archivo.</span></a>
-        <a class="tool-link" href="comprimir-pdf-para-enviar-por-correo-sin-registro.html"><b>Comprimir PDF para correo</b><span>Baja el peso del PDF hasta que quepa en un adjunto.</span></a>
-        <a class="tool-link" href="comprimir-pdf-sin-perder-calidad.html"><b>Comprimir sin perder calidad</b><span>Ajusta la resolución y controla lo que pierdes.</span></a></div>
+        <a class="tool-link" href="dividir-pdf-en-paginas-separadas-gratis.html"><b>Dividir PDF</b><span>Separa un PDF en varios archivos, por página o por rangos.</span></a>
+        <a class="tool-link" href="comprimir-pdf-para-enviar-por-correo-sin-registro.html"><b>Comprimir PDF para correo</b><span>Baja el peso del PDF hasta que quepa en un adjunto.</span></a></div>
     </section>
 
   </div>
@@ -304,7 +344,7 @@
   </div>
 </dialog>
 
-<script defer src="lib/manifest.js?v=20260907"></script>
-<script defer src="main.js?v=20260907"></script>
+<script defer src="lib/manifest.js?v=20260908"></script>
+<script defer src="main.js?v=20260908"></script>
 </body>
 </html>

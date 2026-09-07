@@ -21,5 +21,20 @@ está incrustado con acentos, que la firma es una imagen real dentro del
 archivo y que el giro quedó guardado. También revisa la compresión, el móvil
 de 375×812 y que la página funcione sin JavaScript.
 
+`e2e-nuevas-funciones.js` cubre las funciones de salida múltiple: dividir (por
+página y por rangos), imágenes a PDF (tamaño A4 y tamaño real) y PDF a
+imágenes (JPG y PNG). Necesita las imágenes de prueba:
+
+```bash
+NODE_PATH=/opt/node22/lib/node_modules node tools/pruebas/generar-imagenes-de-prueba.js tools/pruebas
+NODE_PATH=/opt/node22/lib/node_modules node tools/pruebas/e2e-nuevas-funciones.js
+python3 tools/pruebas/verificar-salidas.py tools/pruebas/out
+```
+
+`verificar-salidas.py` abre de verdad los ZIP generados: comprueba que no
+están corruptos, cuántas entradas tienen, cómo se llaman y que cada una
+empieza por la cabecera de su formato. Que el navegador diga «descargado» no
+prueba nada.
+
 `render-pdf.js <archivo.pdf> <pagina> <salida.png>` rasteriza una página del
 PDF resultante para inspeccionarla a ojo.

@@ -46,12 +46,20 @@
 
   /* ---------- estado ---------- */
   var S = {
-    docs: [],     // {id, name, size, bytes:Uint8Array, pdf:pdfjsDoc, textish:bool}
-    pages: [],    // {uid, docId, idx, base, rot, wU, hU, ov:[]}
+    docs: [],     // {id, name, size, kind, bytes:Uint8Array, pdf:pdfjsDoc, textish:bool}
+    // paginas de PDF: {uid, kind:"pdf", docId, idx, base, rot, wU, hU, ov:[]}
+    // paginas de imagen: {uid, kind:"img", docId, mime, data, bitmap, iw, ih,
+    //                     base:0, rot, wU, hU, ov:[]}  (wU/hU derivados de S.imgFit)
+    pages: [],
     mode: "organizar",
+    imgFit: "a4",   // "a4" | "original": tamano de pagina de las imagenes
+    avisoCarga: "",
     busy: false,
     seqD: 0, seqP: 0
   };
+
+  var A4 = { w: 595.28, h: 841.89 };   // puntos
+  var MARGEN_A4 = 24;                  // ~8,5 mm
 
   var card, grid, dz, fileInput, bar, barLabel, resultBox, noticeBox;
   var pdfjsLib = null, pdfLibLoaded = false;
@@ -124,14 +132,96 @@
   // Helvetica estandar solo codifica WinAnsi: fuera lo que no entra.
   function winAnsi(s) { return String(s).replace(/[^\n\x20-\x7E\xA1-\xFF€‘’“”–—]/g, ""); }
 
+  /* ---------- paginas hechas de una imagen ---------- */
+  // El tamano de pagina de una imagen no es un dato del archivo: lo elige el
+  // usuario (ajustar a A4, o el tamano real de la imagen a 96 ppp).
+  function tamanoPaginaImagen(p) {
+    if (S.imgFit === "original") return { w: p.iw * 0.75, h: p.ih * 0.75 };
+    return (p.iw > p.ih) ? { w: A4.h, h: A4.w } : { w: A4.w, h: A4.h };
+  }
+  // Rectangulo que ocupa la imagen dentro de la pagina, en coordenadas de
+  // pagina con origen arriba-izquierda.
+  function rectImagen(p) {
+    var m = (S.imgFit === "original") ? 0 : MARGEN_A4;
+    var k = Math.min((p.wU - m * 2) / p.iw, (p.hU - m * 2) / p.ih);
+    var w = p.iw * k, h = p.ih * k;
+    return { x: (p.wU - w) / 2, y: (p.hU - h) / 2, w: w, h: h };
+  }
+  function refrescarPaginasImagen() {
+    S.pages.forEach(function (p) {
+      if (p.kind !== "img") return;
+      var t = tamanoPaginaImagen(p);
+      p.wU = t.w; p.hU = t.h;
+      var ds = dispSize(p);   // las superposiciones no pueden quedar fuera
+      p.ov.forEach(function (o) {
+        o.x = Math.max(0, Math.min(ds.w - 6, o.x));
+        o.y = Math.max(0, Math.min(ds.h - 6, o.y));
+      });
+    });
+  }
+
   /* ---------- entrada de archivos ---------- */
+  function esPdf(f) {
+    return /\.pdf$/i.test(f.name || "") || f.type === "application/pdf";
+  }
+  function esImagen(f) {
+    return /^image\//.test(f.type || "") || /\.(jpe?g|png|webp|gif|bmp|avif)$/i.test(f.name || "");
+  }
   function pickFiles(list) {
     var files = Array.prototype.slice.call(list || []);
-    files = files.filter(function (f) {
-      return f && (/\.pdf$/i.test(f.name || "") || f.type === "application/pdf");
-    });
-    if (!files.length) { notice("warn", "Solo se admiten archivos PDF."); return; }
+    files = files.filter(function (f) { return f && (esPdf(f) || esImagen(f)); });
+    if (!files.length) { notice("warn", "Solo se admiten archivos PDF e imágenes (JPG, PNG, WebP)."); return; }
     addFiles(files);
+  }
+
+  // Decodifica una imagen. createImageBitmap es lo normal en 2026; el <img>
+  // de reserva mantiene viva la herramienta en navegadores que no lo tengan.
+  function decodificarImagen(f) {
+    if (window.createImageBitmap) return createImageBitmap(f);
+    return new Promise(function (ok, err) {
+      var img = new Image(), u = URL.createObjectURL(f);
+      img.onload = function () { ok(img); };
+      img.onerror = function () { URL.revokeObjectURL(u); err(new Error("imagen ilegible")); };
+      img.src = u;
+    });
+  }
+
+  function cargarImagen(f, skipped) {
+    return decodificarImagen(f).then(function (bmp) {
+      var iw = bmp.naturalWidth || bmp.width, ih = bmp.naturalHeight || bmp.height;
+      if (!iw || !ih) throw new Error("imagen vacía");
+      var id = "d" + (++S.seqD);
+      S.docs.push({ id: id, name: f.name, size: f.size, kind: "img", textish: false });
+
+      var prep;
+      if (f.type === "image/png" || f.type === "image/jpeg") {
+        // PDF admite PNG y JPEG tal cual: se incrustan sin recomprimir
+        prep = f.arrayBuffer().then(function (ab) {
+          return { mime: f.type, data: new Uint8Array(ab) };
+        });
+      } else {
+        // WebP, GIF, BMP, AVIF: el formato PDF no los admite, se pasan a JPEG
+        var c = document.createElement("canvas");
+        c.width = iw; c.height = ih;
+        var ctx = c.getContext("2d");
+        ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, iw, ih);
+        ctx.drawImage(bmp, 0, 0);
+        prep = Promise.resolve({ mime: "image/jpeg", data: c.toDataURL("image/jpeg", 0.92) });
+      }
+
+      return prep.then(function (r) {
+        var pg = {
+          uid: "p" + (++S.seqP), kind: "img", docId: id,
+          mime: r.mime, data: r.data, bitmap: bmp, iw: iw, ih: ih,
+          base: 0, rot: 0, wU: 0, hU: 0, ov: []
+        };
+        var t = tamanoPaginaImagen(pg);
+        pg.wU = t.w; pg.hU = t.h;
+        S.pages.push(pg);
+      });
+    })["catch"](function () {
+      skipped.push(esc(f.name) + " (no se pudo leer la imagen)");
+    });
   }
 
   function addFiles(files) {
@@ -141,7 +231,10 @@
     setState("working");
     setProgress(0.02, "Abriendo los archivos en tu navegador…");
 
-    getPdfjs().then(function (lib) {
+    // El motor de PDF solo se descarga si hace falta: convertir imágenes a PDF
+    // no lo necesita y así esa ruta es instantánea.
+    var hayPdf = files.some(esPdf);
+    (hayPdf ? getPdfjs() : Promise.resolve(null)).then(function (lib) {
       var i = 0, skipped = [];
       function next() {
         if (i >= files.length) return Promise.resolve();
@@ -151,11 +244,12 @@
           skipped.push(esc(f.name) + " (mas de " + LIMITS.tamanoMB + " MB)");
           return next();
         }
+        if (!esPdf(f)) return cargarImagen(f, skipped).then(next);
         return f.arrayBuffer().then(function (ab) {
           var bytes = new Uint8Array(ab);
           return lib.getDocument({ data: bytes.slice(0) }).promise.then(function (doc) {
             var id = "d" + (++S.seqD);
-            var rec = { id: id, name: f.name, size: f.size, bytes: bytes, pdf: doc, textish: false };
+            var rec = { id: id, name: f.name, size: f.size, kind: "pdf", bytes: bytes, pdf: doc, textish: false };
             S.docs.push(rec);
             var chain = Promise.resolve();
             var n = Math.min(doc.numPages, LIMITS.paginas);
@@ -165,7 +259,7 @@
                   return doc.getPage(k).then(function (pg) {
                     var v = pg.view; // [x0,y0,x1,y1] sin rotar
                     S.pages.push({
-                      uid: "p" + (++S.seqP), docId: id, idx: k - 1,
+                      uid: "p" + (++S.seqP), kind: "pdf", docId: id, idx: k - 1,
                       base: ((pg.rotate || 0) % 360 + 360) % 360, rot: 0,
                       wU: Math.abs(v[2] - v[0]), hU: Math.abs(v[3] - v[1]), ov: []
                     });
@@ -201,10 +295,13 @@
       return next().then(function () { return skipped; });
     }).then(function (skipped) {
       S.busy = false;
-      if (skipped && skipped.length) {
-        notice("warn", "No se pudieron abrir: " + skipped.join(", ") + ".");
+      S.avisoCarga = (skipped && skipped.length)
+        ? "No se pudieron abrir: " + skipped.join(", ") + "." : "";
+      if (!S.pages.length) {
+        setState("idle");
+        notice(S.avisoCarga ? "warn" : "", S.avisoCarga);
+        return;
       }
-      if (!S.pages.length) { setState("idle"); return; }
       renderPages();
       updateWarnings();
       setState("ready");
@@ -260,27 +357,48 @@
   function docOf(id) { for (var i = 0; i < S.docs.length; i++) if (S.docs[i].id === id) return S.docs[i]; return null; }
   function pageOf(uid) { for (var i = 0; i < S.pages.length; i++) if (S.pages[i].uid === uid) return S.pages[i]; return null; }
 
+  // Pinta una pagina (de PDF o de imagen) en un lienzo, ya rotada.
+  // `scale` va de unidades de pagina a pixeles de lienzo.
+  function pintarPagina(p, c, scale) {
+    var ds = dispSize(p);
+    c.width = Math.max(1, Math.round(ds.w * scale));
+    c.height = Math.max(1, Math.round(ds.h * scale));
+
+    if (p.kind === "img") {
+      var ctx = c.getContext("2d"), t = totalRot(p);
+      ctx.save();
+      // llevar el origen al de la pagina sin rotar, dentro del lienzo rotado
+      if (t === 90) { ctx.translate(c.width, 0); ctx.rotate(Math.PI / 2); }
+      else if (t === 180) { ctx.translate(c.width, c.height); ctx.rotate(Math.PI); }
+      else if (t === 270) { ctx.translate(0, c.height); ctx.rotate(-Math.PI / 2); }
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, p.wU * scale, p.hU * scale);
+      var r = rectImagen(p);
+      if (p.bitmap) ctx.drawImage(p.bitmap, r.x * scale, r.y * scale, r.w * scale, r.h * scale);
+      ctx.restore();
+      return Promise.resolve();
+    }
+
+    var d = docOf(p.docId);
+    if (!d || !d.pdf) return Promise.reject(new Error("documento no disponible"));
+    return d.pdf.getPage(p.idx + 1).then(function (pg) {
+      var vp = pg.getViewport({ scale: scale, rotation: totalRot(p) });
+      return pg.render({ canvas: c, canvasContext: c.getContext("2d"), viewport: vp }).promise;
+    });
+  }
+
   function drawThumb(box) {
     if (!box || box.dataset.done === "1") return;
     var p = pageOf(box.dataset.thumb);
-    var d = p && docOf(p.docId);
-    if (!p || !d) return;
+    if (!p) return;
     box.dataset.done = "1";
-    d.pdf.getPage(p.idx + 1).then(function (pg) {
-      var t = totalRot(p);
-      var v1 = pg.getViewport({ scale: 1, rotation: t });
-      var target = 150 * Math.min(2, window.devicePixelRatio || 1);
-      var scale = target / v1.width;
-      var vp = pg.getViewport({ scale: scale, rotation: t });
-      var c = document.createElement("canvas");
-      c.width = Math.max(1, Math.round(vp.width));
-      c.height = Math.max(1, Math.round(vp.height));
-      c.style.width = "100%"; c.style.height = "auto";
-      var ctx = c.getContext("2d");
-      return pg.render({ canvas: c, canvasContext: ctx, viewport: vp }).promise.then(function () {
-        box.innerHTML = "";
-        box.appendChild(c);
-      });
+    var ds = dispSize(p);
+    var scale = (150 * Math.min(2, window.devicePixelRatio || 1)) / ds.w;
+    var c = document.createElement("canvas");
+    c.style.width = "100%"; c.style.height = "auto";
+    pintarPagina(p, c, scale).then(function () {
+      box.innerHTML = "";
+      box.appendChild(c);
     })["catch"](function (e) { console.warn("miniatura", e); box.textContent = "—"; });
   }
 
@@ -313,18 +431,32 @@
     refreshThumb(uid);
   }
 
+  // Que paneles de opciones tienen sentido en el modo actual
+  function updateOptions() {
+    var m = S.mode;
+    var comp = $("#optCompress");
+    var hayImg = S.pages.some(function (p) { return p.kind === "img"; });
+    function set(id, on) { var e = $(id); if (e) e.hidden = !on; }
+    set("#compressBox", salidaEsPdf(m));
+    set("#compressOpts", salidaEsPdf(m) && !!(comp && comp.checked));
+    set("#splitOpts", m === "dividir");
+    set("#rangeBox", m === "dividir" && (($("#optSplitMode") || {}).value === "rangos"));
+    set("#imgOpts", m === "imagen-a-pdf" || hayImg);
+    set("#rasterOpts", m === "pdf-a-imagen");
+  }
+
   function updateWarnings() {
+    updateOptions();
     var comp = $("#optCompress");
     var textish = S.docs.some(function (d) { return d.textish; });
-    if (comp && comp.checked && textish) {
-      notice("warn", "<span>Alguno de tus PDF contiene <b>texto seleccionable</b>. " +
+    var partes = [];
+    if (S.avisoCarga) partes.push(S.avisoCarga);
+    if (salidaEsPdf(S.mode) && comp && comp.checked && textish) {
+      partes.push("Alguno de tus PDF contiene <b>texto seleccionable</b>. " +
         "La compresión convierte cada página en imagen: el archivo pesará menos en documentos escaneados, " +
-        "pero el texto dejará de poder copiarse o buscarse. Desactiva la compresión si necesitas mantenerlo.</span>");
-    } else {
-      notice("");
+        "pero el texto dejará de poder copiarse o buscarse. Desactiva la compresión si necesitas mantenerlo.");
     }
-    var box = $("#compressOpts");
-    if (box) box.hidden = !(comp && comp.checked);
+    notice(partes.length ? "warn" : "", partes.length ? "<span>" + partes.join(" ") + "</span>" : "");
   }
 
   /* ---------- reordenar arrastrando ---------- */
@@ -393,16 +525,13 @@
     ed.stage.style.width = Math.round(ds.w * ed.scale) + "px";
     ed.stage.style.height = Math.round(ds.h * ed.scale) + "px";
 
-    d.pdf.getPage(p.idx + 1).then(function (pg) {
-      var dpr = Math.min(2, window.devicePixelRatio || 1);
-      var vp = pg.getViewport({ scale: ed.scale * dpr, rotation: totalRot(p) });
-      var c = document.createElement("canvas");
-      c.width = Math.round(vp.width); c.height = Math.round(vp.height);
-      c.style.width = Math.round(ds.w * ed.scale) + "px";
-      c.style.height = Math.round(ds.h * ed.scale) + "px";
-      return pg.render({ canvas: c, canvasContext: c.getContext("2d"), viewport: vp }).promise
-        .then(function () { ed.stage.insertBefore(c, ed.stage.firstChild); });
-    })["catch"](function (e) { console.warn(e); });
+    var dpr = Math.min(2, window.devicePixelRatio || 1);
+    var lienzo = document.createElement("canvas");
+    lienzo.style.width = Math.round(ds.w * ed.scale) + "px";
+    lienzo.style.height = Math.round(ds.h * ed.scale) + "px";
+    pintarPagina(p, lienzo, ed.scale * dpr).then(function () {
+      ed.stage.insertBefore(lienzo, ed.stage.firstChild);
+    })["catch"](function (e) { console.warn("editor", e); });
 
     p.ov.forEach(function (o) { mountOverlay(o); });
     if (typeof ed.dlg.showModal === "function") ed.dlg.showModal(); else ed.dlg.setAttribute("open", "");
@@ -561,17 +690,24 @@
         rgb = PDFLib.rgb, degrees = PDFLib.degrees;
       return PDFDocument.create().then(function (out) {
         return out.embedFont(StandardFonts.Helvetica).then(function (font) {
-          var srcs = {}, chain = Promise.resolve();
+          var srcs = {}, copied = {}, imgs = {}, chain = Promise.resolve();
+
+          // 1. abrir los PDF de origen (las imagenes no tienen documento)
           S.docs.forEach(function (d) {
+            if (d.kind === "img") return;
             chain = chain.then(function () {
-              return PDFDocument.load(d.bytes, { ignoreEncryption: true }).then(function (doc) { srcs[d.id] = doc; });
+              return PDFDocument.load(d.bytes, { ignoreEncryption: true })
+                .then(function (doc) { srcs[d.id] = doc; });
             });
           });
-          var copied = {};
+
+          // 2. copiar de una vez las paginas que se usan de cada PDF
           chain = chain.then(function () {
             var c2 = Promise.resolve();
             S.docs.forEach(function (d) {
-              var idxs = S.pages.filter(function (p) { return p.docId === d.id; }).map(function (p) { return p.idx; });
+              if (d.kind === "img") return;
+              var idxs = S.pages.filter(function (p) { return p.docId === d.id; })
+                                .map(function (p) { return p.idx; });
               idxs = idxs.filter(function (v, i, a) { return a.indexOf(v) === i; });
               if (!idxs.length) return;
               c2 = c2.then(function () {
@@ -585,16 +721,44 @@
             return c2;
           });
 
+          // 3. incrustar las imagenes antes de montar (addPage es sincrono)
+          chain = chain.then(function () {
+            var c3 = Promise.resolve();
+            S.pages.forEach(function (p) {
+              if (p.kind !== "img") return;
+              c3 = c3.then(function () {
+                var emb = (p.mime === "image/png") ? out.embedPng(p.data) : out.embedJpg(p.data);
+                return emb.then(function (x) { imgs[p.uid] = x; })["catch"](function (e) {
+                  console.warn("imagen", p.uid, e);
+                });
+              });
+            });
+            return c3;
+          });
+
+          // 4. montar en el orden de la rejilla
           return chain.then(function () {
             S.pages.forEach(function (p, i) {
-              var src = copied[p.docId] && copied[p.docId][p.idx];
-              if (!src) return;
-              var page = out.addPage(src);
+              var page;
+              if (p.kind === "img") {
+                page = out.addPage([p.wU, p.hU]);
+                var im = imgs[p.uid];
+                if (im) {
+                  var r = rectImagen(p);
+                  // pdf-lib tiene el origen abajo-izquierda
+                  page.drawImage(im, { x: r.x, y: p.hU - r.y - r.h, width: r.w, height: r.h });
+                }
+              } else {
+                var src = copied[p.docId] && copied[p.docId][p.idx];
+                if (!src) return;
+                page = out.addPage(src);
+              }
               page.setRotation(degrees(totalRot(p)));
               if (onProgress) onProgress((i + 1) / S.pages.length);
             });
-            // superposiciones (texto y firmas) sobre las paginas ya colocadas
-            var pages = out.getPages(), c3 = Promise.resolve();
+
+            // 5. superposiciones (texto y firmas) sobre las paginas colocadas
+            var pages = out.getPages(), c4 = Promise.resolve();
             S.pages.forEach(function (p, i) {
               var page = pages[i];
               if (!page || !p.ov.length) return;
@@ -614,7 +778,7 @@
                     } catch (e) { console.warn("texto", e); }
                   });
                 } else {
-                  c3 = c3.then(function () {
+                  c4 = c4.then(function () {
                     return out.embedPng(o.data).then(function (png) {
                       var a = toPdf(p, o.x, o.y, o.h, mb);
                       page.drawImage(png, { x: a.x, y: a.y, width: o.w, height: o.h, rotate: degrees(a.rot) });
@@ -623,7 +787,7 @@
                 }
               });
             });
-            return c3.then(function () { return out.save({ useObjectStreams: true }); });
+            return c4.then(function () { return out.save({ useObjectStreams: true }); });
           });
         });
       });
@@ -673,68 +837,249 @@
     });
   }
 
+  /* ---------- dividir: un PDF por pagina o por rangos ---------- */
+  // Los rangos se refieren al orden ACTUAL de la rejilla, no al del archivo
+  // original: lo que ves es lo que se separa.
+  function gruposDeCorte(total) {
+    var modo = ($("#optSplitMode") || {}).value || "paginas";
+    if (modo !== "rangos") {
+      var g = [];
+      for (var i = 0; i < total; i++) g.push([i]);
+      return g;
+    }
+    var grupos = [];
+    (($("#optRanges") || {}).value || "").split(",").forEach(function (t) {
+      t = t.trim();
+      if (!t) return;
+      var a, b, m = /^(\d+)?\s*-\s*(\d+)?$/.exec(t);
+      if (m && (m[1] || m[2])) {
+        a = parseInt(m[1] || "1", 10);
+        b = parseInt(m[2] || String(total), 10);
+      } else if (/^\d+$/.test(t)) {
+        a = b = parseInt(t, 10);
+      } else return;
+      a = Math.max(1, Math.min(total, a));
+      b = Math.max(1, Math.min(total, b));
+      if (b < a) { var x = a; a = b; b = x; }
+      var g2 = [];
+      for (var i = a; i <= b; i++) g2.push(i - 1);
+      grupos.push(g2);
+    });
+    return grupos;
+  }
+
+  function partirPdf(bytes, base, onProgress) {
+    return getPdfLib().then(function (PDFLib) {
+      return PDFLib.PDFDocument.load(bytes).then(function (src) {
+        var grupos = gruposDeCorte(src.getPageCount());
+        if (!grupos.length) {
+          throw new Error("no hay rangos válidos: escribe algo como 1-3, 5, 8-");
+        }
+        var salidas = [], c = Promise.resolve();
+        grupos.forEach(function (g, i) {
+          c = c.then(function () {
+            return PDFLib.PDFDocument.create().then(function (out) {
+              return out.copyPages(src, g).then(function (arr) {
+                arr.forEach(function (pg) { out.addPage(pg); });
+                return out.save({ useObjectStreams: true });
+              }).then(function (b) {
+                var etiqueta = (g.length === 1)
+                  ? String(g[0] + 1)
+                  : (g[0] + 1) + "-" + (g[g.length - 1] + 1);
+                salidas.push({ nombre: base + "-" + etiqueta + ".pdf", bytes: b });
+                if (onProgress) onProgress((i + 1) / grupos.length);
+              });
+            });
+          });
+        });
+        return c.then(function () { return salidas; });
+      });
+    });
+  }
+
+  /* ---------- pasar las paginas a imagenes ---------- */
+  function paginasAImagenes(bytes, base, dpi, formato, calidad, onProgress) {
+    return getPdfjs().then(function (lib) {
+      return lib.getDocument({ data: bytes.slice(0) }).promise.then(function (doc) {
+        var salidas = [], c = Promise.resolve();
+        for (var i = 1; i <= doc.numPages; i++) {
+          (function (i) {
+            c = c.then(function () {
+              return doc.getPage(i).then(function (pg) {
+                var v1 = pg.getViewport({ scale: 1 }), scale = dpi / 72, maxPx = 6000;
+                if (v1.width * scale > maxPx || v1.height * scale > maxPx) {
+                  scale = Math.min(maxPx / v1.width, maxPx / v1.height);
+                }
+                var vp = pg.getViewport({ scale: scale });
+                var c2 = document.createElement("canvas");
+                c2.width = Math.max(1, Math.round(vp.width));
+                c2.height = Math.max(1, Math.round(vp.height));
+                var ctx = c2.getContext("2d");
+                ctx.fillStyle = "#ffffff";       // el PDF no tiene fondo; el JPG sí
+                ctx.fillRect(0, 0, c2.width, c2.height);
+                return pg.render({ canvas: c2, canvasContext: ctx, viewport: vp }).promise
+                  .then(function () {
+                    return new Promise(function (ok) {
+                      c2.toBlob(function (b) { ok(b); },
+                        formato === "png" ? "image/png" : "image/jpeg", calidad);
+                    });
+                  })
+                  .then(function (blob) {
+                    c2.width = c2.height = 1;    // liberar memoria
+                    salidas.push({
+                      nombre: base + "-" + i + (formato === "png" ? ".png" : ".jpg"),
+                      blob: blob
+                    });
+                    if (onProgress) onProgress(i / doc.numPages);
+                  });
+              });
+            });
+          })(i);
+        }
+        return c.then(function () { return salidas; });
+      });
+    });
+  }
+
+  /* ---------- empaquetar varios archivos en un zip ---------- */
+  function empaquetarZip(archivos) {
+    return loadScript("lib/vendor/jszip.min.js").then(function () {
+      var zip = new JSZip();
+      archivos.forEach(function (a) { zip.file(a.nombre, a.blob || a.bytes); });
+      // PDF y JPEG ya vienen comprimidos: volver a comprimir solo cuesta tiempo
+      return zip.generateAsync({ type: "blob" });
+    });
+  }
+
   /* ---------- exportar ---------- */
+  function salidaEsPdf(m) { return m !== "dividir" && m !== "pdf-a-imagen"; }
+
+  function nombreBase() {
+    var n = ($("#optName") && $("#optName").value.trim()) || "";
+    if (!n) n = defaultName();
+    return n.replace(/\.(pdf|zip|jpe?g|png)$/i, "") || "documento";
+  }
+
+  function defaultName() {
+    if (S.mode === "comprimir") return "comprimido";
+    if (S.mode === "firmar") return "firmado";
+    if (S.mode === "dividir") return "documento";
+    if (S.mode === "pdf-a-imagen") return "pagina";
+    if (S.mode === "imagen-a-pdf") return "imagenes";
+    if (S.docs.length > 1) return "unido";
+    return (S.docs[0] ? S.docs[0].name.replace(/\.[a-z0-9]+$/i, "") : "documento") + "-editado";
+  }
+
   function exportPdf() {
     if (S.busy || !S.pages.length) return;
+    var modo = S.mode;
+    var comprimir = !!($("#optCompress") && $("#optCompress").checked) && salidaEsPdf(modo);
+    var dpi = parseInt(($("#optDpi") || {}).value || "144", 10);
+    var calidad = parseFloat(($("#optQuality") || {}).value || "0.72");
+    var base = nombreBase();
+    var originalBytes = S.docs.reduce(function (a, d) { return a + (d.size || 0); }, 0);
+
     S.busy = true;
     notice("");
     setState("working");
-    var compress = $("#optCompress") && $("#optCompress").checked;
-    var dpi = parseInt(($("#optDpi") || {}).value || "144", 10);
-    var quality = parseFloat(($("#optQuality") || {}).value || "0.72");
-    var originalBytes = S.docs.reduce(function (a, d) { return a + d.size; }, 0);
-
     setProgress(0.05, "Montando el documento…");
-    buildAssembled(function (f) { setProgress(0.05 + f * (compress ? 0.3 : 0.85), "Montando el documento…"); })
+
+    buildAssembled(function (f) { setProgress(0.05 + f * 0.3, "Montando el documento…"); })
       .then(function (bytes) {
-        if (!compress) return bytes;
-        setProgress(0.4, "Comprimiendo páginas…");
-        return rasterize(bytes, dpi, quality, function (f) {
-          setProgress(0.4 + f * 0.5, "Comprimiendo páginas (" + Math.round(f * 100) + "%)…");
-        });
+
+        if (modo === "dividir") {
+          setProgress(0.4, "Separando páginas…");
+          return partirPdf(bytes, base, function (f) {
+            setProgress(0.4 + f * 0.4, "Separando páginas (" + Math.round(f * 100) + "%)…");
+          }).then(function (arch) {
+            if (arch.length === 1) {
+              return { blob: new Blob([arch[0].bytes], { type: "application/pdf" }),
+                       name: arch[0].nombre, n: 1 };
+            }
+            setProgress(0.85, "Empaquetando " + arch.length + " archivos…");
+            return empaquetarZip(arch).then(function (blob) {
+              return { blob: blob, name: base + "-separado.zip", n: arch.length };
+            });
+          });
+        }
+
+        if (modo === "pdf-a-imagen") {
+          var formato = ($("#optImgFormat") || {}).value || "jpg";
+          var dpiImg = parseInt(($("#optImgDpi") || {}).value || "150", 10);
+          setProgress(0.4, "Generando imágenes…");
+          return paginasAImagenes(bytes, base, dpiImg, formato, 0.92, function (f) {
+            setProgress(0.4 + f * 0.4, "Generando imágenes (" + Math.round(f * 100) + "%)…");
+          }).then(function (arch) {
+            if (arch.length === 1) {
+              return { blob: arch[0].blob, name: arch[0].nombre, n: 1 };
+            }
+            setProgress(0.85, "Empaquetando " + arch.length + " imágenes…");
+            return empaquetarZip(arch).then(function (blob) {
+              return { blob: blob, name: base + "-imagenes.zip", n: arch.length };
+            });
+          });
+        }
+
+        if (comprimir) {
+          setProgress(0.4, "Comprimiendo páginas…");
+          return rasterize(bytes, dpi, calidad, function (f) {
+            setProgress(0.4 + f * 0.5, "Comprimiendo páginas (" + Math.round(f * 100) + "%)…");
+          }).then(function (b) {
+            return { blob: new Blob([b], { type: "application/pdf" }), name: base + ".pdf", n: 1 };
+          });
+        }
+
+        return { blob: new Blob([bytes], { type: "application/pdf" }), name: base + ".pdf", n: 1 };
       })
-      .then(function (bytes) {
+      .then(function (r) {
         setProgress(0.97, "Preparando la descarga…");
-        var blob = new Blob([bytes], { type: "application/pdf" });
-        var name = ($("#optName") && $("#optName").value.trim()) || defaultName();
-        if (!/\.pdf$/i.test(name)) name += ".pdf";
         S.busy = false;
-        showResult(blob, name, originalBytes);
+        showResult(r.blob, r.name, originalBytes, r.n);
       })["catch"](function (err) {
         S.busy = false;
         console.error(err);
         setState("error");
-        $("#errMsg").textContent = "Algo ha fallado al generar el PDF (" +
+        $("#errMsg").textContent = "No hemos podido generar el archivo (" +
           (err && err.message ? err.message : "error desconocido") +
-          "). Si el archivo está protegido con contraseña, quítala antes de subirlo.";
+          "). Si el PDF está protegido con contraseña, quítala antes de abrirlo aquí.";
       });
   }
 
-  function defaultName() {
-    if (S.mode === "comprimir") return "comprimido.pdf";
-    if (S.mode === "firmar") return "firmado.pdf";
-    if (S.docs.length > 1) return "unido.pdf";
-    return (S.docs[0] ? S.docs[0].name.replace(/\.pdf$/i, "") : "documento") + "-editado.pdf";
-  }
+  function showResult(blob, name, originalBytes, n) {
+    var ext = (/\.([a-z0-9]+)$/i.exec(name) || [, "pdf"])[1].toUpperCase();
+    var titulo = $("#resTitle");
+    if (titulo) {
+      titulo.textContent = (n > 1)
+        ? "Tus " + n + " archivos están listos"
+        : (ext === "PDF" ? "Tu PDF está listo" : "Tu imagen está lista");
+    }
 
-  function showResult(blob, name, originalBytes) {
-    var pct = originalBytes ? Math.round((1 - blob.size / originalBytes) * 100) : 0;
-    var sizes = "Tamaño final: <b>" + fmtBytes(blob.size) + "</b>";
-    if (originalBytes) {
-      sizes += " · original " + fmtBytes(originalBytes);
-      if (pct > 2) sizes += " · <b>−" + pct + "%</b>";
-      else if (pct < -2) sizes += " · +" + Math.abs(pct) + "%";
+    var sizes;
+    if (n > 1) {
+      sizes = "<b>" + n + " archivos</b> en un ZIP · " + fmtBytes(blob.size);
+    } else {
+      sizes = "Tamaño final: <b>" + fmtBytes(blob.size) + "</b>";
+      if (originalBytes && ext === "PDF") {
+        var pct = Math.round((1 - blob.size / originalBytes) * 100);
+        sizes += " · original " + fmtBytes(originalBytes);
+        if (pct > 2) sizes += " · <b>−" + pct + "%</b>";
+        else if (pct < -2) sizes += " · +" + Math.abs(pct) + "%";
+      }
     }
     $("#resSizes").innerHTML = sizes;
+
     var btn = $("#resDownload");
-    btn.textContent = "Descargar PDF — " + fmtBytes(blob.size);
+    btn.textContent = "Descargar " + ext + " — " + fmtBytes(blob.size);
     btn.onclick = function () { saveBlob(blob, name); };
     setState("done");
     setTimeout(function () { safe(function () { saveBlob(blob, name); }, "autoDownload"); }, 60);
   }
 
   function resetAll() {
-    S.docs = []; S.pages = []; S.busy = false;
+    S.pages.forEach(function (p) {
+      if (p.bitmap && typeof p.bitmap.close === "function") { try { p.bitmap.close(); } catch (_) { } }
+    });
+    S.docs = []; S.pages = []; S.busy = false; S.avisoCarga = "";
     if (grid) grid.innerHTML = "";
     if (fileInput) fileInput.value = "";
     notice("");
@@ -742,28 +1087,62 @@
   }
 
   /* ---------- modos ---------- */
+  var MODOS = {
+    "organizar": {
+      btn: "Generar y descargar PDF",
+      hint: "Arrastra las miniaturas para reordenar, gira, elimina o edita cualquier página."
+    },
+    "unir": {
+      btn: "Unir y descargar",
+      hint: "Suelta varios PDF: se unirán en el orden de la lista. Arrastra las miniaturas para cambiarlo."
+    },
+    "dividir": {
+      btn: "Separar y descargar",
+      hint: "Una página por archivo, o los rangos que tú indiques. Si sale más de un archivo, se descargan juntos en un ZIP."
+    },
+    "comprimir": {
+      btn: "Comprimir y descargar",
+      hint: "Reduce el peso rasterizando cada página. Ideal para documentos escaneados y para enviar por correo."
+    },
+    "firmar": {
+      btn: "Aplicar y descargar",
+      hint: "Pulsa el lápiz de una página para dibujar tu firma o añadir texto encima."
+    },
+    "imagen-a-pdf": {
+      btn: "Crear PDF y descargar",
+      hint: "Cada imagen será una página. Arrástralas para ordenarlas y gíralas si hace falta."
+    },
+    "pdf-a-imagen": {
+      btn: "Convertir y descargar",
+      hint: "Cada página se convierte en una imagen. Si hay más de una, se descargan juntas en un ZIP."
+    }
+  };
+
   function setMode(m) {
+    if (!MODOS[m]) m = "organizar";
     S.mode = m;
     $$("[data-mode]").forEach(function (b) {
       b.setAttribute("aria-pressed", String(b.dataset.mode === m));
     });
     var comp = $("#optCompress");
     if (comp) comp.checked = (m === "comprimir");
-    var exportBtn = $("#exportBtn");
-    if (exportBtn) {
-      exportBtn.textContent =
-        m === "comprimir" ? "Comprimir y descargar" :
-        m === "unir" ? "Unir y descargar" :
-        m === "firmar" ? "Aplicar y descargar" : "Generar y descargar PDF";
-    }
+    var btn = $("#exportBtn");
+    if (btn) btn.textContent = MODOS[m].btn;
     var hint = $("#modeHint");
-    if (hint) {
-      hint.textContent =
-        m === "comprimir" ? "Reduce el peso rasterizando cada página. Ideal para documentos escaneados y para enviar por correo." :
-        m === "unir" ? "Suelta varios PDF: se unirán en el orden de la lista. Arrastra las miniaturas para cambiarlo." :
-        m === "firmar" ? "Pulsa el lápiz de una página para dibujar tu firma o añadir texto encima." :
-        "Arrastra las miniaturas para reordenar, gira, elimina o edita cualquier página.";
-    }
+    if (hint) hint.textContent = MODOS[m].hint;
+
+    var esImg = (m === "imagen-a-pdf");
+    var mas = $("#addMore");
+    if (mas) mas.textContent = esImg ? "+ Añadir más imágenes" : "+ Añadir más PDF";
+    var t = $("#dzTitle"), sub = $("#dzSub"), h = $("#dzHint");
+    if (t) t.textContent = esImg ? "Arrastra aquí tus imágenes" : "Arrastra aquí tus PDF";
+    if (sub) sub.textContent = esImg
+      ? "o pulsa para elegirlas en tu dispositivo"
+      : "o pulsa para elegirlos en tu dispositivo";
+    if (h) h.textContent = esImg
+      ? "JPG, PNG o WebP · una o varias · también puedes pegar con Ctrl+V"
+      : "Uno o varios archivos · hasta " + LIMITS.tamanoMB + " MB cada uno · también puedes pegar con Ctrl+V";
+
     updateWarnings();
   }
 
@@ -812,6 +1191,14 @@
     $$("[data-reset]").forEach(function (b) { b.addEventListener("click", resetAll); });
     var comp = $("#optCompress");
     if (comp) comp.addEventListener("change", updateWarnings);
+    var split = $("#optSplitMode");
+    if (split) split.addEventListener("change", updateOptions);
+    var fit = $("#optImgFit");
+    if (fit) fit.addEventListener("change", function () {
+      S.imgFit = fit.value === "original" ? "original" : "a4";
+      refrescarPaginasImagen();
+      if (S.pages.length) renderPages();
+    });
     var q = $("#optQuality");
     if (q) q.addEventListener("input", function () {
       var out = $("#optQualityOut");
@@ -832,7 +1219,7 @@
     // modo por parametro (?modo=comprimir) para las landings
     var m = new URLSearchParams(location.search).get("modo") ||
       (document.body.dataset.modo || "organizar");
-    setMode(["organizar", "unir", "comprimir", "firmar"].indexOf(m) >= 0 ? m : "organizar");
+    setMode(m);
   }
 
   function initFooterYear() {

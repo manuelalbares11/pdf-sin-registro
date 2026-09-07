@@ -111,7 +111,8 @@ p { margin: 0 0 1em; }
   margin-bottom: 14px;
 }
 .modes { display: flex; gap: 4px; flex-wrap: wrap; background: var(--bg-soft);
-  padding: 4px; border-radius: 999px; }
+  padding: 4px; border-radius: 999px; max-width: 100%; }
+.modes button { white-space: nowrap; }
 .modes button {
   border: 0; background: transparent; font: inherit; font-size: .85rem;
   font-weight: 600; color: var(--ink-soft); padding: 7px 14px;
@@ -397,8 +398,14 @@ dialog.editor::backdrop { background: rgba(12,12,18,.55); }
   .tool-card { padding: 13px; border-radius: 16px; }
   .pages { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); max-height: 400px; }
   .result .btn--primary { min-width: 0; width: 100%; }
-  .modes { width: 100%; }
-  .modes button { flex: 1 1 auto; padding: 8px 9px; font-size: .8rem; }
+  /* Siete modos no caben en una fila de movil: una sola linea que se desliza,
+     para no empujar la herramienta fuera de la primera pantalla. */
+  .modes {
+    width: 100%; flex-wrap: nowrap; overflow-x: auto;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+  }
+  .modes::-webkit-scrollbar { display: none; }
+  .modes button { flex: 0 0 auto; padding: 8px 11px; font-size: .8rem; }
 
   /* La herramienta tiene que verse sin hacer scroll en un movil de 375x812:
      cabecera de una sola linea y hero comprimido. */

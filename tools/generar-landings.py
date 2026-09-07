@@ -32,7 +32,8 @@ TPL = os.path.join(ROOT, "templates", "landing.template.html")
 DATA_LEGAL = os.path.join(ROOT, "data", "legales.json")
 TPL_LEGAL = os.path.join(ROOT, "templates", "legal.template.html")
 
-MODOS = ("organizar", "unir", "comprimir", "firmar")
+MODOS = ("organizar", "unir", "dividir", "comprimir", "firmar",
+         "imagen-a-pdf", "pdf-a-imagen")
 OBLIGATORIOS = ("slug", "nav", "corto", "modo", "title", "h1", "sub",
                 "meta", "resumen", "introA", "introB", "faq")
 

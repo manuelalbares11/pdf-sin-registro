@@ -1,7 +1,7 @@
 {
   "marca": "PDF sin Registro",
   "dominio": "https://pdfsinregistro.com",
-  "version": "20260907",
+  "version": "20260908",
   "casos": [
     {
       "icono": "contrato",
@@ -200,6 +200,41 @@
       ]
     },
     {
+      "slug": "dividir-pdf-en-paginas-separadas-gratis",
+      "nav": "Dividir PDF",
+      "corto": "Dividir PDF",
+      "modo": "dividir",
+      "title": "Dividir un PDF en páginas separadas gratis | PDF sin Registro",
+      "h1": "Dividir un PDF en páginas separadas, gratis",
+      "sub": "Una página por archivo, o los trozos que tú marques. Salen todos juntos en un ZIP y sin que el documento se suba a ningún sitio.",
+      "meta": "Divide un PDF en páginas separadas gratis y sin registro. Una página por archivo o por rangos, descarga en ZIP y sin marca de agua ni subidas.",
+      "resumen": "Separa un PDF en varios archivos, por página o por rangos.",
+      "introA": "<h2>Un documento, muchos archivos</h2><p>Dividir un PDF es lo contrario de unirlo, y se necesita casi tan a menudo: separar las facturas de un lote escaneado de una tirada, sacar cada certificado en su propio archivo, o partir un expediente de 60 páginas en los cuatro bloques que van a cuatro destinatarios distintos.</p><p>Aquí tienes las dos formas de hacerlo. <strong>Cada página, un archivo:</strong> el PDF sale convertido en tantos documentos como páginas tenga, numerados. <strong>Por rangos:</strong> escribes algo como <code>1-3, 5, 8-</code> y obtienes tres archivos, con las páginas 1 a 3, la 5 sola y de la 8 hasta el final.</p>",
+      "introB": "<h2>Los rangos van sobre lo que ves</h2><p>Un detalle que evita errores: los números de los rangos se refieren al <strong>orden actual de la rejilla</strong>, no al del archivo que soltaste. Si antes de dividir has reordenado, girado o eliminado páginas, los rangos cuentan sobre el resultado. Lo que ves es lo que se separa.</p><p>Cuando salen varios archivos se descargan juntos en un ZIP, que tu sistema abre con doble clic sin instalar nada. Si el rango que has escrito produce un único archivo, se descarga directamente como PDF, sin ZIP de por medio.</p><h3>Y sin que nada se suba</h3><p>El corte se hace en tu navegador con el documento en memoria. Es la parte que importa cuando el PDF que estás partiendo es un expediente con datos de varias personas y solo quieres enviarle a cada una la suya.</p>",
+      "faq": [
+        {
+          "q": "¿Cómo divido un PDF en páginas separadas?",
+          "a": "Suelta el archivo, elige el modo Dividir y deja marcado «Cada página, un archivo». Obtendrás un PDF por página, numerados, en un único ZIP."
+        },
+        {
+          "q": "¿Cómo se escriben los rangos?",
+          "a": "Separados por comas: 1-3, 5, 8-. Un guion final significa «hasta el final del documento». Cada rango genera un archivo."
+        },
+        {
+          "q": "¿Qué es el ZIP que descargo?",
+          "a": "Un único archivo que contiene todos los PDF generados. Se abre con doble clic en Windows, Mac o Android sin instalar nada."
+        },
+        {
+          "q": "¿Los rangos cuentan sobre el archivo original?",
+          "a": "No, sobre el orden que ves en la rejilla. Si has reordenado o eliminado páginas antes, los rangos cuentan sobre ese resultado."
+        },
+        {
+          "q": "¿Se pierde calidad al dividir?",
+          "a": "No. Las páginas se copian sin recomprimir: cada archivo conserva el texto, las tipografías y las imágenes del original."
+        }
+      ]
+    },
+    {
       "slug": "comprimir-pdf-para-enviar-por-correo-sin-registro",
       "nav": "Comprimir PDF",
       "corto": "Comprimir PDF para correo",
@@ -336,6 +371,76 @@
         {
           "q": "¿Sirve para rellenar formularios oficiales?",
           "a": "Sirve para escribir encima de cualquier PDF. Si el impreso exige firma electrónica cualificada, necesitarás además tu certificado digital."
+        }
+      ]
+    },
+    {
+      "slug": "convertir-jpg-a-pdf-sin-registro",
+      "nav": "JPG a PDF",
+      "corto": "Convertir JPG a PDF",
+      "modo": "imagen-a-pdf",
+      "title": "Convertir imagen JPG a PDF sin registro | PDF sin Registro",
+      "h1": "Convertir imágenes JPG a PDF, sin registro",
+      "sub": "Suelta tus fotos o capturas, ponlas en orden y descarga un PDF. Sin cuenta, sin marca de agua y sin que las imágenes salgan de tu equipo.",
+      "meta": "Convierte JPG y PNG a PDF gratis y sin registro. Varias imágenes en un solo documento, ordenadas a tu gusto y sin subir nada a internet.",
+      "resumen": "Tus fotos y capturas convertidas en un PDF ordenado.",
+      "introA": "<h2>Cuando te piden «un PDF» y tú tienes fotos</h2><p>Es la situación de siempre: has fotografiado con el móvil el DNI, el justificante o las cinco hojas de un contrato, y el formulario solo acepta un PDF. Convertir cada foto por separado no vale; hace falta un documento único y en orden.</p><p>Suelta aquí las imágenes —todas de golpe— y verás cada una como una página. Arrástralas para ordenarlas, gira las que salieron de lado y elimina las que repetiste. Al descargar tienes un solo PDF con todas, listo para adjuntar.</p>",
+      "introB": "<h2>Dos maneras de encajar la imagen en la página</h2><p><strong>Ajustar a A4</strong> (la opción por defecto) coloca cada imagen centrada en una hoja A4 con un margen, en vertical u horizontal según la orientación de la foto. Es lo que quieres si el documento va a imprimirse o a un trámite: todas las páginas del mismo tamaño, como un documento de verdad.</p><p><strong>Tamaño real de la imagen</strong> hace la página exactamente del tamaño de la foto. Es lo mejor para capturas de pantalla y para cualquier cosa que no vaya a papel, porque no añade bordes blancos.</p><h3>Sin recomprimir cuando no hace falta</h3><p>Los JPG y los PNG se incrustan tal cual, sin volver a comprimirlos: la calidad que entra es la que sale. Los WebP y otros formatos que el PDF no admite se convierten a JPG de alta calidad, porque no hay alternativa.</p><p>Y puedes mezclar: si sueltas imágenes y PDF a la vez, todo entra en la misma rejilla y sale como un único documento. Va bien para añadir una foto del albarán al final de un contrato.</p>",
+      "faq": [
+        {
+          "q": "¿Qué formatos de imagen admite?",
+          "a": "JPG, PNG y WebP, además de los que tu navegador sepa decodificar (GIF, BMP, AVIF). JPG y PNG se incrustan sin recomprimir; el resto se convierte a JPG de alta calidad."
+        },
+        {
+          "q": "¿Puedo juntar varias fotos en un solo PDF?",
+          "a": "Sí, ese es el uso principal. Suéltalas todas, ordénalas arrastrando y descarga un único documento."
+        },
+        {
+          "q": "¿Se pierde calidad al convertir?",
+          "a": "Con JPG y PNG no: se incrustan tal cual. Solo hay recompresión en formatos que el PDF no admite de forma nativa."
+        },
+        {
+          "q": "¿Qué tamaño de página tendrá el PDF?",
+          "a": "A4 con margen por defecto, en vertical u horizontal según la foto. También puedes elegir que la página tenga el tamaño exacto de la imagen."
+        },
+        {
+          "q": "¿Puedo mezclar imágenes y PDF?",
+          "a": "Sí. Todo entra en la misma rejilla y sale como un único documento, en el orden que tú dejes."
+        }
+      ]
+    },
+    {
+      "slug": "pasar-pdf-a-jpg-alta-resolucion",
+      "nav": "PDF a JPG",
+      "corto": "PDF a JPG",
+      "modo": "pdf-a-imagen",
+      "title": "Pasar PDF a JPG en alta resolución gratis | PDF sin Registro",
+      "h1": "Pasar un PDF a JPG en alta resolución",
+      "sub": "Convierte cada página en una imagen de hasta 300 ppp. Elige JPG o PNG y descárgalas juntas, sin registro y sin subir el documento.",
+      "meta": "Pasa un PDF a JPG en alta resolución gratis y sin registro. Hasta 300 ppp, en JPG o PNG, descarga en ZIP y sin que el archivo salga de tu equipo.",
+      "resumen": "Cada página convertida en una imagen de hasta 300 ppp.",
+      "introA": "<h2>Cuando el PDF tiene que ser una imagen</h2><p>Pasa constantemente: quieres el plano en el grupo de WhatsApp, el cartel en Instagram, una página del informe dentro de una presentación, o subir una imagen a un formulario que no acepta PDF. Todos esos sitios quieren un JPG.</p><p>Aquí eliges la resolución y el formato, y cada página del documento sale como una imagen numerada. Si son varias se descargan juntas en un ZIP; si es una sola, se descarga la imagen directamente.</p>",
+      "introB": "<h2>Qué significa «alta resolución» aquí</h2><p>Los ppp (puntos por pulgada) deciden cuántos píxeles tendrá la imagen. Una página A4 sale a unos 1240×1754&nbsp;px a 150&nbsp;ppp, y a unos 2480×3508&nbsp;px a 300&nbsp;ppp. Guía rápida:</p><ul><li><strong>96 ppp</strong> — para ver en pantalla o mandar por mensajería. Ligero.</li><li><strong>150 ppp</strong> — el equilibrio por defecto: se lee bien y admite recortes.</li><li><strong>300 ppp</strong> — calidad de imprenta. Archivos grandes; úsalo solo si vas a imprimir o a ampliar.</li></ul><h3>JPG o PNG</h3><p>JPG pesa mucho menos y es lo correcto para páginas con fotos o escaneos. PNG no pierde nada y mantiene los bordes del texto perfectamente nítidos, así que es mejor para páginas de texto, gráficos o planos; a cambio, pesa bastante más.</p><p>Igual que el resto de la web, la conversión ocurre en tu navegador: el PDF no se sube a ningún servidor y las imágenes se generan en tu propio equipo.</p>",
+      "faq": [
+        {
+          "q": "¿Qué resolución elijo?",
+          "a": "150 ppp para casi todo, 96 ppp si solo va a verse en pantalla y 300 ppp si vas a imprimir o ampliar la imagen."
+        },
+        {
+          "q": "¿JPG o PNG?",
+          "a": "JPG para páginas con fotos o escaneos, porque pesa mucho menos. PNG para texto, gráficos o planos, porque conserva los bordes nítidos."
+        },
+        {
+          "q": "¿Cómo descargo varias páginas?",
+          "a": "Si el documento tiene más de una página, las imágenes se descargan juntas en un ZIP, numeradas por orden. Con una sola página se descarga la imagen directamente."
+        },
+        {
+          "q": "¿Puedo convertir solo algunas páginas?",
+          "a": "Sí. Elimina de la rejilla las que no quieras antes de convertir: solo se convertirá lo que quede."
+        },
+        {
+          "q": "¿Se sube mi PDF para convertirlo?",
+          "a": "No. Las páginas se dibujan y se exportan en tu navegador; el archivo no sale de tu dispositivo."
         }
       ]
     },

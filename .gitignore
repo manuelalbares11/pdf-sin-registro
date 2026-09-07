@@ -1,3 +1,5 @@
 tools/pruebas/out/
 tools/pruebas/*.pdf
+tools/pruebas/*.jpg
+tools/pruebas/*.png
 .DS_Store
