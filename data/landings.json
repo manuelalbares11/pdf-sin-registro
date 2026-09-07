@@ -1,0 +1,213 @@
+{
+  "marca": "PDF sin Registro",
+  "dominio": "https://pdfsinregistro.com",
+  "version": "20260907",
+  "casos": [
+    {
+      "icono": "contrato",
+      "titulo": "Contratos legales",
+      "texto": "Junta el contrato, sus anexos y el acuerdo de confidencialidad en un único PDF, reordena las cláusulas y estampa tu firma antes de devolverlo. El documento nunca pasa por un servidor ajeno, así que no hay copias del contrato en la nube de nadie."
+    },
+    {
+      "icono": "factura",
+      "titulo": "Facturas y contabilidad",
+      "texto": "Une las facturas del trimestre en un solo archivo para tu gestoría, elimina las páginas repetidas y comprime el resultado hasta que quepa en el adjunto de un correo. Ideal para el cierre mensual y para las presentaciones trimestrales."
+    },
+    {
+      "icono": "dni",
+      "titulo": "Documentos de identidad",
+      "texto": "Cuando te piden el DNI, el pasaporte o un justificante escaneado, este es el caso en el que la privacidad importa de verdad: aquí los datos personales se procesan dentro de tu navegador y no viajan a ningún sitio."
+    }
+  ],
+  "paginas": [
+    {
+      "slug": "index",
+      "nav": "Inicio",
+      "corto": "Editor de PDF completo",
+      "modo": "organizar",
+      "title": "Editor de PDF online gratis sin registro | PDF sin Registro",
+      "h1": "Unir, comprimir y editar PDF gratis, sin registro",
+      "sub": "Arrastra tus PDF, reorganiza las páginas, reduce el peso o añade texto y tu firma. Todo dentro de tu navegador: los archivos no se suben a ningún servidor.",
+      "meta": "Editor de PDF online gratis y sin registro: une, comprime, reordena y firma. Sin marca de agua y sin subir archivos: todo se procesa en tu navegador.",
+      "resumen": "Une, comprime, reordena y firma PDF sin registro ni marca de agua.",
+      "introA": "<h2>Un editor de PDF que no toca tus archivos</h2><p>Casi todas las herramientas de PDF que aparecen en Google funcionan igual: subes el documento a un servidor, alguien lo procesa y te devuelve un enlace de descarga. Eso significa que tu contrato, tu nómina o el escaneo de tu DNI han viajado a un ordenador que no controlas y que, en el mejor de los casos, promete borrarlos en unas horas.</p><p>Esta herramienta está construida al revés. El motor que abre, monta y comprime el PDF se descarga una vez y se ejecuta <strong>dentro de tu navegador</strong>, con JavaScript y WebAssembly. Cuando sueltas un archivo en la pantalla, ese archivo se queda en la memoria de tu equipo. No hay subida, no hay cola de proceso y no hay copia remota que puedas olvidarte de borrar.</p>",
+      "introB": "<h2>Sin registro, sin marca de agua y sin sorpresas al final</h2><p>El otro problema clásico es el muro que aparece justo cuando ya has hecho el trabajo: crea una cuenta, pasa a Pro o acepta una marca de agua cruzando el documento. Aquí la descarga es directa y el PDF sale con la misma calidad con la que entró, sin logotipos añadidos ni límites de uso diarios.</p><p>Al ejecutarse en local, además, es más rápido: no dependes de tu velocidad de subida ni de la carga del servidor. Un documento de 30&nbsp;MB se une en el tiempo que tarda tu equipo en leerlo del disco. Funciona igual en móvil y en ordenador, y sigue funcionando aunque pierdas la conexión después de cargar la página.</p><h3>Qué puedes hacer</h3><ul><li><strong>Unir</strong> varios PDF en uno, en el orden que elijas.</li><li><strong>Reordenar, girar y eliminar</strong> páginas arrastrando las miniaturas.</li><li><strong>Comprimir</strong> el documento para que quepa en un correo.</li><li><strong>Añadir texto y firmar</strong> a mano alzada sobre cualquier página.</li></ul>",
+      "faq": [
+        {"q": "¿Tengo que registrarme para usarlo?", "a": "No. No hay cuentas, ni correo electrónico, ni límite de documentos al día. Abres la página y ya puedes trabajar."},
+        {"q": "¿Se suben mis archivos a algún servidor?", "a": "No. El procesamiento ocurre íntegramente en tu navegador. Puedes comprobarlo abriendo la pestaña Red de las herramientas de desarrollo: al procesar un PDF no verás ninguna petición de subida."},
+        {"q": "¿El PDF descargado lleva marca de agua?", "a": "No. El archivo sale limpio y a su calidad original. Tampoco hay pantallas de pago después de procesar."},
+        {"q": "¿Qué tamaño de archivo aguanta?", "a": "Depende de la memoria de tu dispositivo. Como referencia funciona con documentos de hasta unos 100 MB y 500 páginas; en un móvil antiguo conviene quedarse bastante por debajo."},
+        {"q": "¿Funciona en el móvil?", "a": "Sí, en Chrome, Safari y Firefox actualizados. En pantallas pequeñas las miniaturas se reorganizan con los botones de flecha en lugar de arrastrando."},
+        {"q": "¿Puedo abrir un PDF protegido con contraseña?", "a": "No directamente. Primero tienes que quitarle la contraseña desde el visor donde lo abres normalmente; si no, el navegador no puede leer su contenido."}
+      ]
+    },
+
+    {
+      "slug": "unir-pdf-gratis-sin-marca-de-agua",
+      "nav": "Unir PDF",
+      "corto": "Unir PDF sin marca de agua",
+      "modo": "unir",
+      "title": "Unir PDF gratis sin marca de agua ni registro | PDF sin Registro",
+      "h1": "Unir PDF gratis, sin marca de agua",
+      "sub": "Suelta todos los documentos, colócalos en el orden que quieras y descarga un único PDF limpio. Sin cuenta, sin logotipos y sin subir nada a internet.",
+      "meta": "Une varios PDF en uno gratis y sin marca de agua. Sin registro y sin subir archivos: el documento se monta dentro de tu navegador y se descarga al instante.",
+      "resumen": "Combina varios documentos en uno solo, sin logotipos añadidos.",
+      "introA": "<h2>Unir PDF sin que aparezca una marca de agua</h2><p>La marca de agua es el peaje habitual de las webs gratuitas: te dejan unir los documentos y luego cruzan cada página con su logotipo para que pagues la versión de pago. En un presupuesto, un contrato o un trabajo de clase eso es directamente inservible.</p><p>Aquí no existe ese peaje porque no hay servidor que mantener por documento procesado: el montaje del PDF lo hace tu propio navegador. Sueltas los archivos, arrastras las miniaturas hasta dejarlas en el orden correcto y descargas. El resultado conserva el texto seleccionable, los enlaces y la calidad de las imágenes del original, porque las páginas se copian tal cual, no se reimprimen.</p>",
+      "introB": "<h2>Ordenar antes de unir, no después</h2><p>La mayoría de fusiones salen mal por el orden. Por eso la herramienta no une «archivo tras archivo» a ciegas: te muestra todas las páginas de todos los documentos en una sola rejilla. Puedes intercalar la página 3 del anexo entre las dos primeras del contrato, girar un escaneo que entró del revés o borrar la hoja en blanco que siempre se cuela al final.</p><p>Si además necesitas que el archivo pese poco para enviarlo, activa la casilla de compresión antes de exportar y tendrás las dos operaciones en una sola descarga.</p><h3>Consejo práctico</h3><p>Renombra el archivo final en el campo «Nombre del archivo» antes de descargar. Es un detalle pequeño, pero cuando envías documentación a una administración o a un cliente, un nombre claro evita un correo de vuelta.</p>",
+      "faq": [
+        {"q": "¿Cuántos PDF puedo unir a la vez?", "a": "Los que quieras, mientras la memoria de tu dispositivo lo permita. La referencia práctica son unas 500 páginas en total."},
+        {"q": "¿El PDF unido lleva marca de agua o publicidad dentro?", "a": "No. El documento descargado no contiene ningún elemento añadido: solo tus páginas."},
+        {"q": "¿Se pierde calidad al unir?", "a": "No. Las páginas se copian sin recomprimir, así que mantienen texto, tipografías e imágenes del original."},
+        {"q": "¿Puedo cambiar el orden de las páginas antes de unir?", "a": "Sí. Arrastra las miniaturas o usa las flechas de cada página. También puedes girar o eliminar páginas sueltas."},
+        {"q": "¿Puedo unir un PDF con un documento de Word?", "a": "No directamente: primero guarda el Word como PDF desde el propio Word (Archivo, Guardar como, PDF) y luego súmalo aquí."}
+      ]
+    },
+
+    {
+      "slug": "comprimir-pdf-para-enviar-por-correo-sin-registro",
+      "nav": "Comprimir PDF",
+      "corto": "Comprimir PDF para correo",
+      "modo": "comprimir",
+      "title": "Comprimir PDF para enviar por correo sin registro | PDF sin Registro",
+      "h1": "Comprimir PDF para enviarlo por correo, sin registro",
+      "sub": "Reduce el peso del documento hasta que entre en el adjunto de Gmail o Outlook. Sin cuenta, sin marca de agua y sin que el archivo salga de tu equipo.",
+      "meta": "Comprime PDF gratis para enviarlo por correo sin registro. Elige la calidad, mira cuánto ha bajado y descarga: todo el proceso ocurre en tu navegador.",
+      "resumen": "Baja el peso del PDF hasta que quepa en un adjunto.",
+      "introA": "<h2>Por qué tu PDF pesa 40 MB</h2><p>El culpable casi siempre es el escáner. Un documento escaneado guarda cada página como una fotografía a resolución alta, y diez páginas se convierten en decenas de megas. Gmail corta en 25&nbsp;MB por correo y muchas administraciones bajan el listón a 5 o incluso 2&nbsp;MB, así que el archivo se queda fuera.</p><p>La compresión de esta herramienta ataca exactamente ese problema: vuelve a dibujar cada página a la resolución que tú elijas y la guarda como imagen JPEG optimizada. En un escaneado típico la reducción va del 60&nbsp;% al 90&nbsp;% sin que el texto deje de leerse con comodidad.</p>",
+      "introB": "<h2>Elige el equilibrio y compruébalo antes de enviar</h2><p>Tienes tres niveles: máximo ahorro (96&nbsp;ppp) para documentos que solo se van a leer en pantalla, equilibrado (144&nbsp;ppp) como opción por defecto, y alta calidad (200&nbsp;ppp) cuando el destinatario va a imprimir. El deslizador de detalle afina todavía más. Al terminar verás el tamaño final y el porcentaje ahorrado respecto al original.</p><h3>Una advertencia honesta</h3><p>Si tu PDF es de <strong>texto nativo</strong> (uno exportado desde Word, por ejemplo), comprimirlo así lo convierte en imágenes: el archivo puede incluso crecer y dejarás de poder seleccionar o buscar el texto. La herramienta lo detecta y te avisa antes de exportar. En ese caso lo razonable es unir y descargar sin comprimir, o comprimir solo si de verdad necesitas recortar el peso.</p>",
+      "faq": [
+        {"q": "¿Cuánto puede bajar de peso mi PDF?", "a": "En documentos escaneados es habitual reducir entre un 60 % y un 90 %. En PDF de texto nativo la ganancia es pequeña o nula, y por eso la herramienta te avisa."},
+        {"q": "¿Se puede comprimir un PDF a menos de 2 MB?", "a": "En la mayoría de escaneados sí, eligiendo 96 ppp y bajando el detalle de imagen. Verás el resultado antes de enviarlo y puedes repetir con otros ajustes."},
+        {"q": "¿Sigue leyéndose bien el documento?", "a": "Sí a 144 ppp para lectura en pantalla. Si vas a imprimirlo, usa 200 ppp."},
+        {"q": "¿Pierdo el texto seleccionable?", "a": "Sí: la compresión rasteriza las páginas. Si necesitas conservar la búsqueda de texto, no actives la compresión."},
+        {"q": "¿Se sube mi documento a algún sitio para comprimirlo?", "a": "No. La compresión se calcula en tu navegador; el archivo no sale de tu dispositivo en ningún momento."}
+      ]
+    },
+
+    {
+      "slug": "juntar-varios-pdf-en-uno-online",
+      "nav": "Juntar PDF",
+      "corto": "Juntar varios PDF en uno",
+      "modo": "unir",
+      "title": "Juntar varios PDF en uno online y gratis | PDF sin Registro",
+      "h1": "Juntar varios PDF en uno, online y gratis",
+      "sub": "Arrastra todos los documentos a la vez y descárgalos como un único archivo ordenado. Sin instalar programas y sin subir nada a internet.",
+      "meta": "Junta varios PDF en un solo archivo online y gratis, sin registro. Ordena las páginas arrastrando y descarga al instante desde tu propio navegador.",
+      "resumen": "Varios documentos sueltos convertidos en un único archivo.",
+      "introA": "<h2>De diez archivos sueltos a un solo documento</h2><p>Hay trámites que se resuelven en un minuto y otros que se atascan porque el formulario solo admite <em>un</em> adjunto. Juntar los PDF es la solución obvia, pero instalar un programa de escritorio para hacerlo dos veces al año no lo es.</p><p>Esta página resuelve el caso sin instalar nada: suelta los archivos sobre la pantalla y verás todas sus páginas en una rejilla. Lo que descargas es un PDF único, con las páginas en el orden que hayas dejado y sin ninguna huella de la herramienta dentro del documento.</p>",
+      "introB": "<h2>Junta y limpia en el mismo paso</h2><p>Al ver todas las páginas juntas es cuando descubres las hojas en blanco, los escaneos torcidos y la portada duplicada. Puedes eliminarlas y girarlas antes de exportar, así que el archivo final no solo está unido: está presentable.</p><p>Y si el resultado se te va de peso, activa la compresión antes de generar el documento para que quepa en el adjunto sin tener que pasar por una segunda herramienta.</p><h3>Orden alfabético o el que tú decidas</h3><p>Las páginas entran en el orden en que sueltas los archivos. Si arrastras varios de golpe y el navegador los coloca de forma distinta a la que esperabas, mueve las miniaturas: manda siempre lo que ves en la rejilla.</p>",
+      "faq": [
+        {"q": "¿Necesito instalar algún programa?", "a": "No. Todo funciona en el navegador que ya tienes abierto, también en el móvil."},
+        {"q": "¿Puedo juntar PDF de tamaños de página distintos?", "a": "Sí. Cada página conserva su tamaño original dentro del documento final."},
+        {"q": "¿Se mantienen los enlaces y el texto?", "a": "Sí, siempre que no actives la compresión, que convierte las páginas en imágenes."},
+        {"q": "¿Hay un límite de archivos?", "a": "No hay límite artificial; el límite real es la memoria de tu dispositivo, en torno a 500 páginas."},
+        {"q": "¿Cuánto cuesta?", "a": "Nada. La web se sostiene con los espacios de publicidad de la página, no cobrando por el uso de la herramienta."}
+      ]
+    },
+
+    {
+      "slug": "firmar-pdf-online-gratis-sin-registro",
+      "nav": "Firmar PDF",
+      "corto": "Firmar PDF a mano",
+      "modo": "firmar",
+      "title": "Firmar PDF online gratis sin registro | PDF sin Registro",
+      "h1": "Firmar un PDF online, gratis y sin registro",
+      "sub": "Dibuja tu firma con el ratón o el dedo, colócala donde quieras y descarga el documento firmado. Sin cuenta y sin que el contrato salga de tu equipo.",
+      "meta": "Firma PDF online gratis sin registro: dibuja tu firma, colócala en la página y descarga. El contrato se procesa en tu navegador, no se sube a ningún servidor.",
+      "resumen": "Dibuja tu firma y colócala sobre cualquier página.",
+      "introA": "<h2>Firmar sin imprimir, escanear y volver a enviar</h2><p>El circuito de siempre —imprimir, firmar, escanear, mandar— consume papel, tiempo y calidad. La alternativa habitual son plataformas que te piden crear una cuenta y que, de paso, se quedan una copia del contrato en su servidor.</p><p>Aquí abres el PDF, pulsas el lápiz de la página que quieras y dibujas la firma en el recuadro con el ratón, con el trackpad o con el dedo si estás en el móvil. La firma se añade como imagen transparente sobre la página: puedes moverla, agrandarla por la esquina y colocarla exactamente sobre la línea de puntos.</p>",
+      "introB": "<h2>Firma manuscrita, no firma electrónica cualificada</h2><p>Conviene ser claro: lo que hace esta herramienta es estampar tu firma manuscrita sobre el documento, igual que si lo firmaras a bolígrafo y lo escanearas. Sirve para el uso cotidiano —un contrato de alquiler entre particulares, un albarán, una autorización de colegio, un presupuesto aceptado—, pero <strong>no es una firma electrónica cualificada</strong> con certificado. Para trámites que exijan eso (Hacienda, Seguridad Social, notaría) necesitas tu certificado digital o Cl@ve.</p><p>Además de firmar puedes añadir texto: la fecha, tu nombre completo, el DNI o una anotación en una casilla del formulario. Elige tamaño y color, colócalo arrastrando y exporta.</p>",
+      "faq": [
+        {"q": "¿La firma tiene validez legal?", "a": "Es una firma manuscrita estampada sobre el documento, equivalente a firmar en papel y escanear. Para trámites que exijan firma electrónica cualificada necesitas un certificado digital."},
+        {"q": "¿Se guarda mi firma en algún sitio?", "a": "No. Se dibuja en tu navegador y desaparece al cerrar la página. Tampoco se envía a ningún servidor."},
+        {"q": "¿Puedo firmar desde el móvil?", "a": "Sí, y es lo más cómodo: se dibuja con el dedo directamente sobre la pantalla."},
+        {"q": "¿Puedo firmar varias páginas del mismo documento?", "a": "Sí. Repite el proceso en cada página que necesites; también puedes añadir texto en unas y firma en otras."},
+        {"q": "¿Puedo añadir la fecha o mi DNI junto a la firma?", "a": "Sí, con la herramienta de texto del mismo editor: eliges tamaño y color y lo colocas arrastrando."}
+      ]
+    },
+
+    {
+      "slug": "reordenar-paginas-pdf-online",
+      "nav": "Reordenar",
+      "corto": "Reordenar páginas",
+      "modo": "organizar",
+      "title": "Reordenar las páginas de un PDF online gratis | PDF sin Registro",
+      "h1": "Reordenar las páginas de un PDF",
+      "sub": "Ve todas las páginas en miniatura y arrástralas hasta dejarlas como quieres. Sin registro, sin marca de agua y sin subir el documento.",
+      "meta": "Reordena las páginas de un PDF online y gratis arrastrando miniaturas. Sin registro ni marca de agua: el documento se reorganiza en tu navegador.",
+      "resumen": "Arrastra miniaturas y deja el documento en orden.",
+      "introA": "<h2>El orden correcto, viéndolo</h2><p>Reordenar un PDF escribiendo números de página es un ejercicio de fe. Aquí ves todas las páginas a la vez, con su miniatura, y las mueves arrastrando hasta que la secuencia tiene sentido. Es la diferencia entre adivinar y comprobar.</p><p>Funciona igual si las páginas vienen de un único archivo o de varios: puedes soltar dos documentos y entrelazar sus páginas, algo típico cuando escaneas por un lado las hojas impares y por otro las pares.</p>",
+      "introB": "<h2>Girar y limpiar de paso</h2><p>Cada miniatura lleva sus propios controles: girar 90&nbsp;grados —tantas veces como haga falta—, eliminar la página o abrir el editor para añadirle texto o una firma. Las flechas laterales sirven para mover con precisión en pantallas pequeñas, donde arrastrar es incómodo.</p><p>Al exportar, el documento se reconstruye copiando las páginas tal cual, así que el texto sigue siendo texto y no pierdes calidad. El giro se guarda dentro del PDF, de modo que cualquier visor lo mostrará ya derecho.</p>",
+      "faq": [
+        {"q": "¿Puedo mover páginas entre dos PDF distintos?", "a": "Sí. Suelta los dos documentos y verás todas sus páginas en la misma rejilla, listas para intercalar."},
+        {"q": "¿Se pierde calidad al reordenar?", "a": "No. Las páginas se copian sin recomprimir, salvo que actives la compresión a propósito."},
+        {"q": "¿Cómo reordeno en el móvil?", "a": "Con las flechas de cada miniatura, que mueven la página una posición a izquierda o derecha."},
+        {"q": "¿El giro se queda guardado en el archivo?", "a": "Sí, la rotación se escribe en el PDF y cualquier visor lo abrirá ya orientado."},
+        {"q": "¿Puedo deshacer un cambio?", "a": "Puedes volver a mover o girar cuantas veces quieras antes de exportar; nada se aplica al archivo hasta que pulsas descargar."}
+      ]
+    },
+
+    {
+      "slug": "eliminar-paginas-de-un-pdf-gratis",
+      "nav": "Eliminar páginas",
+      "corto": "Eliminar páginas",
+      "modo": "organizar",
+      "title": "Eliminar páginas de un PDF gratis y sin registro | PDF sin Registro",
+      "h1": "Eliminar páginas de un PDF, gratis",
+      "sub": "Quita las hojas en blanco, las portadas repetidas o las páginas que no quieres compartir y descarga el documento limpio.",
+      "meta": "Elimina páginas de un PDF gratis y sin registro. Borra hojas sueltas viendo las miniaturas y descarga el documento sin marca de agua, todo en tu navegador.",
+      "resumen": "Borra las páginas que sobran y descarga limpio.",
+      "introA": "<h2>Quitar lo que sobra antes de enviar</h2><p>Casi ningún escaneo sale perfecto: se cuelan hojas en blanco, la portada del fax, una página duplicada o un anexo que no toca compartir con ese destinatario. Borrar esas páginas es el retoque más común y el más rápido.</p><p>Suelta el PDF, localiza la página en la rejilla de miniaturas y pulsa la papelera. La numeración se recalcula sola, así que ves en todo momento cómo va a quedar el documento final.</p>",
+      "introB": "<h2>Eliminar también es privacidad</h2><p>Cuando quitas una página aquí, esa página no llega a formar parte del archivo que descargas: el PDF se reconstruye únicamente con las páginas que has dejado. No es un recorte visual, es un documento nuevo.</p><p>Y como todo el proceso ocurre en tu equipo, la versión completa —la que contenía la página con los datos que no querías enviar— no ha pasado por ningún servidor intermedio. En documentación laboral, médica o bancaria, esa diferencia importa.</p>",
+      "faq": [
+        {"q": "¿La página eliminada desaparece de verdad del archivo?", "a": "Sí. El PDF se reconstruye solo con las páginas que dejas; la eliminada no viaja dentro del documento."},
+        {"q": "¿Puedo eliminar varias páginas seguidas?", "a": "Sí, una a una con el botón de papelera. La numeración se actualiza al momento."},
+        {"q": "¿Puedo recuperar una página borrada por error?", "a": "Vuelve a soltar el archivo original: nada se modifica hasta que descargas, así que el PDF de tu disco sigue intacto."},
+        {"q": "¿Sirve para dividir un PDF?", "a": "Sí, en la práctica: borra lo que no quieres y descarga, y repite con el original para obtener la otra mitad."},
+        {"q": "¿Deja marca de agua?", "a": "No. La descarga es directa y sin elementos añadidos."}
+      ]
+    },
+
+    {
+      "slug": "rotar-paginas-pdf-online-gratis",
+      "nav": "Girar páginas",
+      "corto": "Girar páginas",
+      "modo": "organizar",
+      "title": "Girar las páginas de un PDF online gratis | PDF sin Registro",
+      "h1": "Girar las páginas de un PDF, gratis",
+      "sub": "Endereza los escaneos que salieron tumbados y guarda el giro dentro del archivo, para que se abra derecho en cualquier visor.",
+      "meta": "Gira páginas de un PDF online gratis y sin registro. Endereza escaneos y guarda la rotación en el archivo, sin marca de agua y sin subir el documento.",
+      "resumen": "Endereza escaneos tumbados y guarda el giro.",
+      "introA": "<h2>El escaneo torcido, resuelto</h2><p>Girar la vista en el visor de PDF no sirve de nada: al cerrarlo vuelve a estar tumbado, y quien lo reciba lo verá igual de mal. La rotación tiene que quedar escrita <em>dentro</em> del archivo.</p><p>Eso es lo que hace esta herramienta. Pulsa el icono de giro de la miniatura tantas veces como necesites —90, 180 o 270&nbsp;grados— y al exportar la orientación queda guardada en el documento. Se abrirá derecho en Acrobat, en el visor del móvil y en la impresora.</p>",
+      "introB": "<h2>Página a página, no todo de golpe</h2><p>Los documentos reales mezclan orientaciones: un contrato vertical con una tabla apaisada en medio, o un escaneo en el que solo tres hojas entraron al revés. Por eso cada página lleva su propio botón de giro y no hay un «girar todo» que estropee lo que ya estaba bien.</p><p>Si además necesitas reordenar o quitar hojas, puedes hacerlo en la misma sesión y descargar una sola vez.</p>",
+      "faq": [
+        {"q": "¿El giro se guarda en el archivo?", "a": "Sí. La rotación se escribe en el PDF, así que cualquier visor lo mostrará ya orientado."},
+        {"q": "¿Puedo girar solo algunas páginas?", "a": "Sí. Cada miniatura tiene su propio botón de giro; las demás no se tocan."},
+        {"q": "¿Se pierde calidad al girar?", "a": "No. Girar no vuelve a comprimir la página, solo cambia su orientación declarada."},
+        {"q": "¿Cómo giro 180 grados?", "a": "Pulsando el botón de giro dos veces. Cada pulsación son 90 grados."},
+        {"q": "¿Necesito una cuenta?", "a": "No. Ni cuenta, ni correo, ni límite de documentos."}
+      ]
+    },
+
+    {
+      "slug": "anadir-texto-a-un-pdf-gratis",
+      "nav": "Añadir texto",
+      "corto": "Añadir texto a un PDF",
+      "modo": "firmar",
+      "title": "Añadir texto a un PDF gratis y sin registro | PDF sin Registro",
+      "h1": "Añadir texto a un PDF, gratis",
+      "sub": "Escribe encima del documento: rellena una casilla, pon la fecha o añade una nota. Colócalo arrastrando y descarga sin marca de agua.",
+      "meta": "Añade texto a un PDF gratis y sin registro: rellena formularios, pon la fecha o anota el documento y descarga. Todo se procesa dentro de tu navegador.",
+      "resumen": "Escribe sobre el PDF y coloca el texto donde quieras.",
+      "introA": "<h2>Rellenar un PDF que no es un formulario</h2><p>Muchos documentos llegan como PDF plano: un impreso escaneado, una hoja de inscripción, un albarán. No tienen campos que rellenar, así que la alternativa es imprimirlos y escribir a mano.</p><p>Con la herramienta de texto puedes escribir directamente sobre la página. Escribes la frase, eliges el tamaño y el color, y la arrastras hasta el sitio exacto: la casilla, el margen o la línea de la fecha. El texto se incrusta como texto real del PDF, no como una imagen pegada encima.</p>",
+      "introB": "<h2>Detalles que ayudan</h2><p>El tamaño se indica en puntos, la misma unidad que usa el PDF: 10 a 12 puntos equivale a la letra normal de un documento, y 14 o más se usa para rellenar casillas grandes. El color por defecto es un negro suave; puedes poner azul si quieres que se distinga de lo impreso, como haría un bolígrafo.</p><p>Se admiten acentos, eñes y signos del español. Si vas a añadir también tu firma, dibújala en el mismo editor y colócala junto al texto antes de exportar: todo sale en una única descarga.</p>",
+      "faq": [
+        {"q": "¿El texto queda seleccionable en el PDF?", "a": "Sí. Se incrusta como texto real, salvo que después actives la compresión, que convierte las páginas en imágenes."},
+        {"q": "¿Puedo cambiar el tipo de letra?", "a": "Se usa Helvetica, la tipografía estándar de PDF, para que el archivo pese poco y se vea igual en cualquier visor."},
+        {"q": "¿Admite acentos y eñes?", "a": "Sí, admite los caracteres del español. Los alfabetos no latinos no están soportados."},
+        {"q": "¿Puedo mover el texto después de colocarlo?", "a": "Sí, arrastrándolo dentro del editor. También puedes eliminarlo con la equis."},
+        {"q": "¿Sirve para rellenar formularios oficiales?", "a": "Sirve para escribir encima de cualquier PDF. Si el impreso exige firma electrónica cualificada, necesitarás además tu certificado digital."}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+const { chromium } = require("playwright");
+const fs = require("fs"), path = require("path");
+(async () => {
+  const file = process.argv[2], pageNo = parseInt(process.argv[3] || "1", 10), out = process.argv[4];
+  const b64 = fs.readFileSync(file).toString("base64");
+  const br = await chromium.launch({ executablePath: "/opt/pw-browsers/chromium-1194/chrome-linux/chrome" });
+  const p = await br.newPage({ viewport: { width: 700, height: 950 } });
+  p.on("pageerror", e => console.log("ERR", e.message));
+  await p.goto("http://127.0.0.1:8137/index.html");
+  await p.evaluate(async ([b64, pageNo]) => {
+    await import("./lib/vendor/pdfjs/compat.mjs");
+    const lib = await import("./lib/vendor/pdfjs/pdf.min.mjs");
+    lib.GlobalWorkerOptions.workerSrc = "lib/vendor/pdfjs/worker-boot.mjs";
+    const bin = Uint8Array.from(atob(b64), c => c.charCodeAt(0));
+    const doc = await lib.getDocument({ data: bin }).promise;
+    const pg = await doc.getPage(pageNo);
+    const vp = pg.getViewport({ scale: 1.1 });
+    document.body.innerHTML = "";
+    document.body.style.background = "#ddd";
+    const c = document.createElement("canvas");
+    c.width = vp.width; c.height = vp.height; c.id = "probe";
+    document.body.appendChild(c);
+    await pg.render({ canvas: c, canvasContext: c.getContext("2d"), viewport: vp }).promise;
+    window.__n = doc.numPages;
+    const tc = await pg.getTextContent();
+    window.__txt = tc.items.map(i => i.str).join(" ");
+  }, [b64, pageNo]);
+  console.log("paginas:", await p.evaluate(() => window.__n));
+  console.log("texto pagina", pageNo + ":", (await p.evaluate(() => window.__txt)).slice(0, 200));
+  await p.locator("#probe").screenshot({ path: out });
+  await br.close();
+})();
