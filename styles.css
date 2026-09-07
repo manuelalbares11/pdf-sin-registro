@@ -421,9 +421,12 @@ dialog.editor::backdrop { background: rgba(12,12,18,.55); }
   .dropzone strong { font-size: 1rem; }
 }
 
-/* ---------- 12. Dark mode ---------- */
+/* ---------- 12. Modo oscuro ----------
+   Tres estados: sin marca (sigue al sistema), data-theme="dark" y
+   data-theme="light". Solo se redefinen tokens; los componentes siempre
+   leen de los tokens. El bloque :root claro de arriba es la base completa. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #0f0f14;
     --bg-soft: #1b1b23;
     --surface: #16161d;
@@ -442,9 +445,30 @@ dialog.editor::backdrop { background: rgba(12,12,18,.55); }
     --warn-soft: #241d10;
     --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
   }
-  .page-card__thumb canvas, .page-card__thumb img { box-shadow: 0 1px 6px rgba(0,0,0,.5); }
-  .editor__stage { background: #fff; }
+  :root:not([data-theme="light"]) .page-card__thumb canvas,
+  :root:not([data-theme="light"]) .page-card__thumb img { box-shadow: 0 1px 6px rgba(0,0,0,.5); }
 }
+:root[data-theme="dark"] {
+    --bg: #0f0f14;
+    --bg-soft: #1b1b23;
+    --surface: #16161d;
+    --surface-2: #1b1b23;
+    --line: #292933;
+    --line-strong: #3a3a47;
+    --ink: #f1f1f5;
+    --ink-soft: #b9bac6;
+    --muted: #85879a;
+    --accent: #ff6a58;
+    --accent-dark: #ff8674;
+    --accent-soft: #2a1714;
+    --ok: #56d3a0;
+    --ok-soft: #10241d;
+    --warn: #f0c274;
+    --warn-soft: #241d10;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+:root[data-theme="dark"] .page-card__thumb canvas,
+:root[data-theme="dark"] .page-card__thumb img { box-shadow: 0 1px 6px rgba(0,0,0,.5); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

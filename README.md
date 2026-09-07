@@ -124,6 +124,17 @@ Los motores usan `import()` dinámico y un worker, y ambos exigen `http://`.
 Pruebas de extremo a extremo (Chromium real, camino feliz completo y sondas
 sobre el PDF exportado) en `tools/pruebas/` — ver su README.
 
+## Demo de una sola página
+
+```bash
+python3 tools/construir-demo.py demo.html
+```
+
+Empaqueta la página principal en un único HTML (CSS y JS embebidos, las
+librerías desde CDN) para publicarla donde no se pueden subir archivos
+sueltos. Es sólo para demos: **la web real no usa ese archivo** y no toca
+ningún CDN en tiempo de ejecución.
+
 ## Publicar
 
 Es un sitio estático: subir el contenido de la carpeta (incluido `.htaccess`)
