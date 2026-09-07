@@ -951,6 +951,17 @@
     });
   }
 
+  // Entrega de varios archivos de salida. En la web se empaquetan en un ZIP.
+  // Está aislado aquí a propósito: la demo de una sola página (que se publica
+  // en un visor que no admite .zip) sustituye SOLO esta función por una
+  // entrega archivo a archivo. Ver tools/construir-demo.py.
+  function entregarVarios(arch, nombreZip) {
+    setProgress(0.85, "Empaquetando " + arch.length + " archivos…");
+    return empaquetarZip(arch).then(function (blob) {
+      return { blob: blob, name: nombreZip, n: arch.length };
+    });
+  }
+
   /* ---------- exportar ---------- */
   function salidaEsPdf(m) { return m !== "dividir" && m !== "pdf-a-imagen"; }
 
@@ -996,10 +1007,7 @@
               return { blob: new Blob([arch[0].bytes], { type: "application/pdf" }),
                        name: arch[0].nombre, n: 1 };
             }
-            setProgress(0.85, "Empaquetando " + arch.length + " archivos…");
-            return empaquetarZip(arch).then(function (blob) {
-              return { blob: blob, name: base + "-separado.zip", n: arch.length };
-            });
+            return entregarVarios(arch, base + "-separado.zip");
           });
         }
 
@@ -1013,10 +1021,7 @@
             if (arch.length === 1) {
               return { blob: arch[0].blob, name: arch[0].nombre, n: 1 };
             }
-            setProgress(0.85, "Empaquetando " + arch.length + " imágenes…");
-            return empaquetarZip(arch).then(function (blob) {
-              return { blob: blob, name: base + "-imagenes.zip", n: arch.length };
-            });
+            return entregarVarios(arch, base + "-imagenes.zip");
           });
         }
 
@@ -1034,7 +1039,7 @@
       .then(function (r) {
         setProgress(0.97, "Preparando la descarga…");
         S.busy = false;
-        showResult(r.blob, r.name, originalBytes, r.n);
+        showResult(r, originalBytes);
       })["catch"](function (err) {
         S.busy = false;
         console.error(err);
@@ -1045,9 +1050,33 @@
       });
   }
 
-  function showResult(blob, name, originalBytes, n) {
+  function showResult(r, originalBytes) {
+    var titulo = $("#resTitle"), lista = $("#resList"), btn = $("#resDownload");
+    if (lista) { lista.innerHTML = ""; lista.hidden = true; }
+
+    // Varios archivos entregados de uno en uno (demo de una sola página)
+    if (r.archivos) {
+      if (titulo) titulo.textContent = "Tus " + r.archivos.length + " archivos están listos";
+      $("#resSizes").innerHTML = "Descárgalos de uno en uno:";
+      if (btn) btn.hidden = true;
+      if (lista) {
+        lista.hidden = false;
+        r.archivos.forEach(function (a) {
+          var b = document.createElement("button");
+          b.type = "button";
+          b.className = "btn btn--sm";
+          b.textContent = a.nombre + " — " + fmtBytes(a.blob.size);
+          b.onclick = function () { saveBlob(a.blob, a.nombre); };
+          lista.appendChild(b);
+        });
+      }
+      setState("done");
+      return;
+    }
+
+    if (btn) btn.hidden = false;
+    var blob = r.blob, name = r.name, n = r.n || 1;
     var ext = (/\.([a-z0-9]+)$/i.exec(name) || [, "pdf"])[1].toUpperCase();
-    var titulo = $("#resTitle");
     if (titulo) {
       titulo.textContent = (n > 1)
         ? "Tus " + n + " archivos están listos"
@@ -1068,7 +1097,6 @@
     }
     $("#resSizes").innerHTML = sizes;
 
-    var btn = $("#resDownload");
     btn.textContent = "Descargar " + ext + " — " + fmtBytes(blob.size);
     btn.onclick = function () { saveBlob(blob, name); };
     setState("done");

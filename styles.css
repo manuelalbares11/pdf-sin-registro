@@ -228,6 +228,8 @@ p { margin: 0 0 1em; }
 .result .sizes b { color: var(--ok); }
 .result .btn--primary { min-width: 260px; }
 .result .again { display: inline-block; margin-top: 12px; font-size: .87rem; }
+#resList { display: flex; flex-direction: column; gap: 7px; align-items: center; margin-top: 4px; }
+#resList .btn { min-width: 240px; max-width: 100%; }
 
 .nojs { padding: 16px; border: 1px solid var(--line); border-radius: var(--radius);
   background: var(--warn-soft); color: var(--warn); font-size: .9rem; }

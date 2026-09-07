@@ -21,6 +21,7 @@ SALIDA = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "demo-una-pagi
 PDFJS = "https://cdn.jsdelivr.net/npm/pdfjs-dist@6.1.200/build/pdf.min.mjs"
 PDFJS_WORKER = "https://cdn.jsdelivr.net/npm/pdfjs-dist@6.1.200/build/pdf.worker.min.mjs"
 PDFLIB = "https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"
+JSZIP = "https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"
 REPO = "https://github.com/manuelalbares11/pdf-sin-registro"
 
 
@@ -58,6 +59,7 @@ assert viejo in main, "no encontrado el bloque getPdfjs"
 main = main.replace(viejo, nuevo)
 main = main.replace('loadScript("lib/vendor/pdf-lib.min.js")', 'loadScript("%s")' % PDFLIB)
 assert PDFLIB in main, "no encontrada la carga de pdf-lib"
+main = main.replace('loadScript("lib/vendor/jszip.min.js")', 'loadScript("%s")' % JSZIP)
 
 # --- 1b. la descarga pasa por la capacidad del visor de Artifacts ---
 # El visor no deja que una pagina se descargue un archivo por su cuenta:
@@ -83,6 +85,31 @@ nuevo_save = '''  function saveBlob(blob, name) {
     var a = document.createElement("a");'''
 assert viejo_save in main, "no encontrado saveBlob"
 main = main.replace(viejo_save, nuevo_save, 1)
+
+# --- 1c. varios archivos: uno a uno, no en un ZIP ---
+# El visor de Artifacts solo acepta ciertas extensiones y .zip no es una de
+# ellas. En la demo se sustituye SOLO el punto de entrega multiple: los PDF o
+# las imagenes se ofrecen de uno en uno, cada uno con su propio boton.
+viejo_zip = '''  function entregarVarios(arch, nombreZip) {
+    setProgress(0.85, "Empaquetando " + arch.length + " archivos…");
+    return empaquetarZip(arch).then(function (blob) {
+      return { blob: blob, name: nombreZip, n: arch.length };
+    });
+  }'''
+nuevo_zip = '''  function entregarVarios(arch, nombreZip) {
+    // Demo de una pagina: el visor no admite .zip, se entregan sueltos.
+    return Promise.resolve({
+      archivos: arch.map(function (a) {
+        return {
+          nombre: a.nombre,
+          blob: a.blob || new Blob([a.bytes], { type: "application/pdf" })
+        };
+      }),
+      n: arch.length
+    });
+  }'''
+assert viejo_zip in main, "no encontrado entregarVarios"
+main = main.replace(viejo_zip, nuevo_zip, 1)
 
 # sin descarga automatica: el visor solo admite un aviso a la vez, y el
 # boton grande del resultado ya es la accion explicita del usuario.

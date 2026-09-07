@@ -36,5 +36,11 @@ están corruptos, cuántas entradas tienen, cómo se llaman y que cada una
 empieza por la cabecera de su formato. Que el navegador diga «descargado» no
 prueba nada.
 
+`e2e-demo.js` prueba el empaquetado de una sola página (`tools/construir-demo.py`):
+que el CSS y el JS embebidos siguen funcionando, que no quedan enlaces a
+páginas que ahí no existen, y que la entrega de varios archivos se hace de uno
+en uno en lugar de en un ZIP. Necesita una variante servida en local del
+archivo empaquetado, con las rutas de las librerías apuntando a `lib/vendor/`.
+
 `render-pdf.js <archivo.pdf> <pagina> <salida.png>` rasteriza una página del
 PDF resultante para inspeccionarla a ojo.
