@@ -42,5 +42,12 @@ páginas que ahí no existen, y que la entrega de varios archivos se hace de uno
 en uno en lugar de en un ZIP. Necesita una variante servida en local del
 archivo empaquetado, con las rutas de las librerías apuntando a `lib/vendor/`.
 
+`e2e-recursos-pdfjs.js` vigila un fallo silencioso concreto: los archivos que
+pdf.js descarga bajo demanda (wasm de JBIG2 y JPEG2000, tipografías estándar,
+cmaps) los pide **el worker**, así que una ruta relativa se resuelve contra la
+URL del worker y no contra la de la página. El resultado era
+`lib/vendor/pdfjs/lib/vendor/pdfjs/...` y un 404 que nadie ve hasta que alguien
+sube un escaneado en blanco y negro y le sale en blanco.
+
 `render-pdf.js <archivo.pdf> <pagina> <salida.png>` rasteriza una página del
 PDF resultante para inspeccionarla a ojo.

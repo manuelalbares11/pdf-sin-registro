@@ -3,3 +3,5 @@ tools/pruebas/*.pdf
 tools/pruebas/*.jpg
 tools/pruebas/*.png
 .DS_Store
+dist/
+pdf-sin-registro-netlify.zip

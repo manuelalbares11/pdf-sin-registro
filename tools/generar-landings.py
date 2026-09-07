@@ -200,6 +200,36 @@ def generar_legales(marca, dominio, version):
     return len(datos["paginas"])
 
 
+def generar_404(marca, dominio, version, paginas):
+    """Pagina de error 404. Netlify la sirve sola si se llama 404.html; en
+    Apache la activa el .htaccess. En vez de un callejon sin salida, lista
+    las herramientas."""
+    enlaces = "\n        ".join(
+        '<a class="tool-link" href="%s"><b>%s</b><span>%s</span></a>'
+        % (archivo_de(p["slug"]), esc_attr(p["corto"]), esc_attr(p["resumen"]))
+        for p in paginas
+    )
+    cuerpo = ('<p>La dirección que has abierto no existe o ha cambiado de nombre. '
+              'Las herramientas siguen todas aquí, y todas funcionan sin registro:</p>'
+              '<div class="tools-grid">' + enlaces + "</div>")
+    html = leer(TPL_LEGAL)
+    for k, v in {
+        "{{BRAND}}": esc_attr(marca),
+        "{{VER}}": version,
+        "{{TITLE}}": "Página no encontrada",
+        "{{H1}}": "Esta página no existe",
+        "{{META}}": "La página que buscas no existe. Estas son las herramientas disponibles.",
+        "{{CANONICAL}}": dominio + "/404.html",
+        "{{FECHA}}": "",
+        "{{CUERPO}}": cuerpo,
+    }.items():
+        html = html.replace(k, v)
+    # la 404 no lleva fecha de actualizacion
+    html = html.replace('<p><strong>Última actualización:</strong> </p>', "")
+    escribir(os.path.join(ROOT, "404.html"), html)
+    print("  [ok] %-52s %d KB" % ("404.html", len(html) // 1024))
+
+
 def generar():
     datos = json.loads(leer(DATA))
     errores = validar(datos)
@@ -303,9 +333,10 @@ def generar():
                + "\n".join(filas) + "\n</urlset>\n")
     escribir(os.path.join(ROOT, "sitemap.xml"), sitemap)
 
-    # paginas legales (noindex: fuera del sitemap a proposito)
+    # paginas legales y 404 (noindex: fuera del sitemap a proposito)
     print("")
     n_legales = generar_legales(marca, dominio, version)
+    generar_404(marca, dominio, version, paginas)
 
     robots = ("User-agent: *\nAllow: /\n\n"
               "Sitemap: %s/sitemap.xml\n" % dominio)

@@ -61,6 +61,34 @@
   var A4 = { w: 595.28, h: 841.89 };   // puntos
   var MARGEN_A4 = 24;                  // ~8,5 mm
 
+  // Recursos que pdf.js descarga SOLO si el documento concreto los necesita:
+  // descomprimir JBIG2 (casi todo escaneado en blanco y negro) y JPEG2000,
+  // las tipografias estandar no incrustadas y los mapas de caracteres CJK.
+  // Sin ellos un escaneado normal se rasteriza en blanco, que es justo el
+  // caso principal de esta herramienta.
+  //
+  // OJO: quien pide estos archivos es el WORKER, y una ruta relativa se
+  // resuelve contra la URL del worker, no contra la de la pagina. Con
+  // "lib/vendor/pdfjs/..." el worker acaba pidiendo
+  // "lib/vendor/pdfjs/lib/vendor/pdfjs/..." y todo da 404 en silencio. Por
+  // eso se convierten a URL absoluta contra la base del documento, que ademas
+  // sigue funcionando si la web cuelga de un subdirectorio.
+  function urlRecurso(rel) {
+    try { return new URL(rel, document.baseURI).href; } catch (e) { return rel; }
+  }
+  var PDFJS_RES = {
+    wasmUrl: urlRecurso("lib/vendor/pdfjs/wasm/"),
+    standardFontDataUrl: urlRecurso("lib/vendor/pdfjs/standard_fonts/"),
+    cMapUrl: urlRecurso("lib/vendor/pdfjs/cmaps/"),
+    cMapPacked: true,
+    iccUrl: urlRecurso("lib/vendor/pdfjs/iccs/")
+  };
+  function docOpts(bytes) {
+    var o = { data: bytes };
+    for (var k in PDFJS_RES) if (PDFJS_RES.hasOwnProperty(k)) o[k] = PDFJS_RES[k];
+    return o;
+  }
+
   var card, grid, dz, fileInput, bar, barLabel, resultBox, noticeBox;
   var pdfjsLib = null, pdfLibLoaded = false;
 
@@ -247,7 +275,7 @@
         if (!esPdf(f)) return cargarImagen(f, skipped).then(next);
         return f.arrayBuffer().then(function (ab) {
           var bytes = new Uint8Array(ab);
-          return lib.getDocument({ data: bytes.slice(0) }).promise.then(function (doc) {
+          return lib.getDocument(docOpts(bytes.slice(0))).promise.then(function (doc) {
             var id = "d" + (++S.seqD);
             var rec = { id: id, name: f.name, size: f.size, kind: "pdf", bytes: bytes, pdf: doc, textish: false };
             S.docs.push(rec);
@@ -798,7 +826,7 @@
   function rasterize(bytes, dpi, quality, onProgress) {
     return Promise.all([getPdfjs(), getPdfLib()]).then(function (mods) {
       var lib = mods[0], PDFLib = mods[1];
-      return lib.getDocument({ data: bytes.slice(0) }).promise.then(function (doc) {
+      return lib.getDocument(docOpts(bytes.slice(0))).promise.then(function (doc) {
         return PDFLib.PDFDocument.create().then(function (out) {
           var chain = Promise.resolve();
           for (var i = 1; i <= doc.numPages; i++) {
@@ -900,7 +928,7 @@
   /* ---------- pasar las paginas a imagenes ---------- */
   function paginasAImagenes(bytes, base, dpi, formato, calidad, onProgress) {
     return getPdfjs().then(function (lib) {
-      return lib.getDocument({ data: bytes.slice(0) }).promise.then(function (doc) {
+      return lib.getDocument(docOpts(bytes.slice(0))).promise.then(function (doc) {
         var salidas = [], c = Promise.resolve();
         for (var i = 1; i <= doc.numPages; i++) {
           (function (i) {

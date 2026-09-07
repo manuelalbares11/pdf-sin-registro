@@ -29,6 +29,12 @@ ninguna petición de red con el contenido de tus documentos.
 - `lib/vendor/pdfjs/compat.mjs` añade `Map.prototype.getOrInsert(Computed)`,
   que pdf.js 6.1.200 da por hecho y que muchos navegadores todavía no tienen.
   Se instala también dentro del worker vía `worker-boot.mjs`.
+- `lib/vendor/pdfjs/{wasm,standard_fonts,cmaps,iccs}` son recursos que pdf.js
+  pide **solo si el documento concreto los necesita**: descomprimir JBIG2
+  (el formato de casi todo escaneado en blanco y negro) y JPEG2000, las
+  tipografías estándar no incrustadas y los mapas de caracteres CJK. Sin
+  ellos, un escaneado normal se rasteriza en blanco — justo el caso principal
+  de la herramienta. No pesan en la carga inicial: nunca se piden de entrada.
 
 ### Una sola tubería para siete modos
 
@@ -177,7 +183,55 @@ librerías desde CDN) para publicarla donde no se pueden subir archivos
 sueltos. Es sólo para demos: **la web real no usa ese archivo** y no toca
 ningún CDN en tiempo de ejecución.
 
-## Publicar
+## Publicar en Netlify
+
+```bash
+python3 tools/preparar-netlify.py --dominio https://tudominio.com
+```
+
+Un solo comando: guarda el dominio, regenera todas las páginas, deja en
+`dist/` **solo lo que se sirve** y comprime esa carpeta en
+`pdf-sin-registro-netlify.zip` con los archivos en la raíz del ZIP.
+
+**La carpeta que se arrastra a Netlify es `dist/`.** Es la única que contiene
+`index.html` en su raíz. Fuera quedan `tools/`, `templates/`, `data/`, el
+README y el `.htaccess` (que es de Apache: Netlify lo ignora).
+
+El script no solo copia, también revisa antes de dejarte publicar:
+
+- que exista `index.html` en la raíz de `dist/`;
+- que las etiquetas `canonical` apunten al dominio configurado, no a otro;
+- que ningún enlace interno lleve a una página que no existe;
+- qué datos del titular siguen sin rellenar en las páginas legales.
+
+### El dominio importa
+
+Las etiquetas `canonical`, las Open Graph y el `sitemap.xml` llevan el dominio
+escrito dentro. Si compras el `.com` después de haber publicado, vuelve a
+ejecutar el script con `--dominio` y sube otra vez: si no, le estarás diciendo
+a Google que la versión buena de cada página está en otra dirección.
+
+### Cabeceras
+
+`.htaccess` no funciona en Netlify. Su equivalente son `dist/_headers` y
+`dist/_redirects`, que el script escribe dentro de la carpeta publicada: HTML
+siempre revalidado (al publicar una versión nueva se ve al momento), `lib/`
+cacheado un año (son versiones fijas que nunca cambian) y las cabeceras de
+seguridad. Sigue sin haber COOP/COEP, por lo mismo de siempre: romperían
+AdSense.
+
+En los ajustes de Netlify, deja **Pretty URLs desactivado** (Asset
+optimization). Si se activa, Netlify redirige `/pagina.html` a `/pagina` y las
+`canonical` dejarían de coincidir con la URL servida.
+
+### Desde Git, si lo prefieres
+
+`netlify.toml` en la raíz ya está listo: `command = python3
+tools/preparar-netlify.py --sin-zip`, `publish = dist`. Conectas el
+repositorio y cada push regenera y despliega. No hay dependencias que
+instalar: el generador es Python de la biblioteca estándar.
+
+## Publicar en un hosting Apache
 
 Es un sitio estático: subir el contenido de la carpeta (incluido `.htaccess`)
 a la raíz del hosting. Excluir `tools/`, `templates/` y `data/`, que son de

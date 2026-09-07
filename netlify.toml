@@ -1,0 +1,16 @@
+# Configuración para desplegar desde Git (Netlify conectado al repositorio).
+#
+# Si publicas arrastrando la carpeta dist/ a mano, este archivo no interviene:
+# ahí mandan dist/_headers y dist/_redirects, que el script genera dentro de
+# la propia carpeta publicada.
+
+[build]
+  # Regenera las 16 landings, las páginas legales, la 404, el sitemap y el
+  # robots, y deja en dist/ solo lo que se sirve. --sin-zip porque para un
+  # despliegue desde Git el ZIP no hace falta.
+  command = "python3 tools/preparar-netlify.py --sin-zip"
+  publish = "dist"
+
+# Sin plugins, sin dependencias y sin paso de compilación: la web es HTML, CSS
+# y JavaScript clásico. Lo único que hace el "build" es generar páginas a
+# partir de data/landings.json.
