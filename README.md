@@ -139,6 +139,26 @@ La web no carga ningún script de terceros. Antes de activar AdSense hay que
 pegar un CMP de cookies en el `<head>` (hay un TODO marcado en la plantilla) y
 completar los datos del titular en `privacidad.html` y `aviso-legal.html`.
 
+**`ads.txt`.** Google exige este archivo para comprobar que los anuncios de tu
+dominio los vendes tú. Sin él acaba limitando los ingresos. Pon tu ID de editor
+en `data/legales.json`:
+
+```json
+"adsense": { "publisherId": "pub-0000000000000000" }
+```
+
+y el generador escribe `ads.txt` en la raíz. Con el campo vacío no se genera
+nada, a propósito: un `ads.txt` con un ID inventado es peor que no tenerlo,
+porque le dice a Google que tu dominio autoriza a un tercero que no existe.
+
+### Qué no añadir nunca a las cabeceras
+
+`dist/_headers` lleva escrito el porqué, para que no se rompa por accidente
+dentro de seis meses: nada de COOP/COEP, nada de `Content-Security-Policy` que
+no liste los dominios de Google, nada de `Cross-Origin-Resource-Policy:
+same-origin`. Cualquiera de las tres deja los anuncios en blanco **sin dar
+ningún error visible**, que es la peor forma de romperse.
+
 > Nota técnica: no se usan cabeceras COOP/COEP en `.htaccess` a propósito.
 > Habilitarían `SharedArrayBuffer`, pero rompen los iframes de terceros —
 > es decir, romperían AdSense.

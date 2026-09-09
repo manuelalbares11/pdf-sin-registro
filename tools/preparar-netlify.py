@@ -38,11 +38,12 @@ ZIP = os.path.join(ROOT, "pdf-sin-registro-netlify.zip")
 DATA = os.path.join(ROOT, "data", "landings.json")
 
 # Lo unico que se publica. Todo lo demas es material de desarrollo.
-ARCHIVOS_SUELTOS = ["styles.css", "main.js", "sitemap.xml", "robots.txt"]
+ARCHIVOS_SUELTOS = ["styles.css", "main.js", "sitemap.xml", "robots.txt", "ads.txt"]
 CARPETAS = ["lib", "assets"]
 
 HEADERS = """# Cabeceras HTTP para Netlify. Sustituyen al .htaccess de Apache, que
-# Netlify ignora. Se aplican de arriba abajo; gana la regla mas concreta.
+# Netlify ignora por completo. Se aplican de arriba abajo y para una misma
+# cabecera gana la regla mas concreta.
 
 /*
   X-Content-Type-Options: nosniff
@@ -69,8 +70,34 @@ HEADERS = """# Cabeceras HTTP para Netlify. Sustituyen al .htaccess de Apache, q
 /assets/*
   Cache-Control: public, max-age=2592000
 
-# NOTA IMPORTANTE: aqui NO van las cabeceras COOP/COEP. Activarian
-# SharedArrayBuffer, pero rompen los iframes de terceros, es decir, AdSense.
+# ---------------------------------------------------------------------------
+# PUBLICIDAD: por que estas cabeceras no rompen AdSense
+# ---------------------------------------------------------------------------
+# Los anuncios se cargan en iframes de otro dominio. Lo que los rompe no es
+# lo que hay aqui, sino lo que NO debe anadirse nunca:
+#
+#   - Cross-Origin-Embedder-Policy / Cross-Origin-Opener-Policy (COOP/COEP).
+#     Aislan la pagina y matan los iframes de terceros. No estan, y no deben
+#     estar. Es tambien la razon de usar el motor de un solo hilo.
+#
+#   - Content-Security-Policy. Aqui no hay ninguna, y esta bien asi: una CSP
+#     que no liste googlesyndication.com, doubleclick.net y googletagservices.com
+#     deja los anuncios en blanco sin dar ningun error visible.
+#
+#   - Cross-Origin-Resource-Policy: same-origin. Bloquea recursos de terceros.
+#
+# Lo que si hay, y por que es inofensivo:
+#
+#   - X-Frame-Options: SAMEORIGIN controla quien puede meter TU pagina dentro
+#     de un iframe suyo. No tiene nada que ver con los iframes que tu pagina
+#     incrusta, asi que no afecta a los anuncios. Te protege del clickjacking.
+#
+#   - Permissions-Policy solo bloquea camara, microfono y ubicacion, que ni la
+#     herramienta ni los anuncios usan. Las funciones de Privacy Sandbox que si
+#     usa AdSense (browsing-topics, attribution-reporting) NO estan en la lista,
+#     asi que conservan su valor por defecto, que es permisivo. Si algun dia
+#     anades funciones a esta linea, no toques esas dos.
+# ---------------------------------------------------------------------------
 """
 
 REDIRECTS = """# Redirecciones de Netlify.

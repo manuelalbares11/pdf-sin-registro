@@ -200,6 +200,35 @@ def generar_legales(marca, dominio, version):
     return len(datos["paginas"])
 
 
+def generar_ads_txt():
+    """ads.txt: Google exige este archivo para verificar que los anuncios de tu
+    dominio los vendes tu y no alguien que se hace pasar por ti. Sin el, AdSense
+    acaba limitando o dejando de pagar los ingresos.
+
+    Solo se escribe si hay un ID de editor: un ads.txt con un ID inventado es
+    peor que no tenerlo (Google lo lee como que el dominio autoriza a un tercero
+    que no existe)."""
+    datos = json.loads(leer(DATA_LEGAL))
+    pub = (datos.get("adsense", {}) or {}).get("publisherId", "").strip()
+    destino = os.path.join(ROOT, "ads.txt")
+
+    if not pub:
+        if os.path.exists(destino):
+            os.remove(destino)
+        return False
+
+    if not re.match(r"^pub-\d{16}$", pub):
+        print("  AVISO: publisherId '%s' no tiene la forma pub- y 16 digitos; "
+              "no se genera ads.txt." % pub)
+        return False
+
+    # f08c47fec0942fa0 es el identificador de Google en el estandar ads.txt
+    # del IAB: es el mismo para todos los editores, no es un dato tuyo.
+    escribir(destino, "google.com, %s, DIRECT, f08c47fec0942fa0\n" % pub)
+    print("  [ok] %-52s (%s)" % ("ads.txt", pub))
+    return True
+
+
 def generar_404(marca, dominio, version, paginas):
     """Pagina de error 404. Netlify la sirve sola si se llama 404.html; en
     Apache la activa el .htaccess. En vez de un callejon sin salida, lista
@@ -337,6 +366,8 @@ def generar():
     print("")
     n_legales = generar_legales(marca, dominio, version)
     generar_404(marca, dominio, version, paginas)
+    if not generar_ads_txt():
+        print("  [--] ads.txt no generado: falta publisherId en data/legales.json")
 
     robots = ("User-agent: *\nAllow: /\n\n"
               "Sitemap: %s/sitemap.xml\n" % dominio)
