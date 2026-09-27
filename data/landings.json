@@ -56,8 +56,27 @@
         {
           "q": "¿Puedo abrir un PDF protegido con contraseña?",
           "a": "No directamente. Primero tienes que quitarle la contraseña desde el visor donde lo abres normalmente; si no, el navegador no puede leer su contenido."
+        },
+        {
+          "q": "¿Puedo unir y comprimir en la misma descarga?",
+          "a": "Sí, y es lo recomendable. Marca la casilla «Reducir el tamaño al exportar» antes de pulsar el botón: obtendrás un único archivo ya unido y ya comprimido, en una sola operación."
+        },
+        {
+          "q": "¿Puedo cambiar de modo sin volver a soltar los archivos?",
+          "a": "Sí, mientras los documentos sigan en la mesa de trabajo. Cuando ya has descargado el resultado, «Procesar otro documento» vacía la mesa: si vas a necesitar dos resultados distintos del mismo material, haz el primero y vuelve a soltar los archivos para el segundo."
+        },
+        {
+          "q": "¿Qué navegador necesito?",
+          "a": "Chrome, Edge, Firefox o Safari actualizados, en ordenador o en móvil. Hace falta tener JavaScript activado, porque el procesamiento ocurre ahí: no hay servidor que lo haga por ti."
         }
-      ]
+      ],
+      "pasos": {
+        "titulo": "¿Cómo usar el editor de PDF paso a paso?",
+        "parrafos": [
+          "Los siete botones de arriba no son siete herramientas distintas: son siete salidas de la misma mesa de trabajo. Sueltas los documentos una sola vez y decides después qué quieres que salga por la puerta. <strong>Organizar</strong> devuelve un PDF con las páginas como las hayas dejado. <strong>Unir</strong> hace lo mismo partiendo de varios archivos. <strong>Dividir</strong> devuelve varios archivos en lugar de uno. <strong>Comprimir</strong> rebaja el peso. <strong>Firmar</strong> te lleva al editor de texto y firma. Y los dos últimos convierten imágenes en PDF o al revés. El modo decide <em>qué se descarga</em>, no qué puedes hacer: reordenar arrastrando, girar, eliminar páginas y abrir el editor con el lápiz están siempre disponibles, estés en el modo que estés.",
+          "Eso permite encadenar operaciones en una sola descarga, que es donde se ahorra tiempo de verdad: suelta cinco facturas escaneadas, quita las hojas en blanco, endereza las dos que entraron tumbadas, marca «Reducir el tamaño al exportar» y pulsa el botón. Un solo archivo, ordenado, derecho y ligero, sin pasar por tres webs. La casilla de compresión solo aparece cuando la salida es un PDF; al dividir o al convertir a imagen se oculta porque ahí no tiene sentido. Mientras los documentos sigan en la mesa de trabajo puedes cambiar de modo las veces que quieras sin volver a soltar nada. Y en todo el proceso <strong>los archivos originales de tu disco no se tocan</strong>: si te equivocas, empiezas otra vez y ya está."
+        ]
+      }
     },
     {
       "slug": "editar-pdf-online-sin-registro",
@@ -91,8 +110,27 @@
         {
           "q": "¿Se sube mi documento para editarlo?",
           "a": "No. El editor se ejecuta en tu navegador; el archivo permanece en tu dispositivo de principio a fin."
+        },
+        {
+          "q": "¿Puedo tachar u ocultar un dato personal del documento?",
+          "a": "No de forma segura. Escribir encima no borra nada: el texto original sigue dentro del archivo y se puede seleccionar y copiar. Si tienes que ocultar información sensible, elimina la página completa o corrige el documento de origen antes de exportarlo a PDF."
+        },
+        {
+          "q": "¿Cómo consigo que la firma quede bien?",
+          "a": "Dibújala grande y sin prisa dentro del recuadro; ocupando todo el ancho sale más limpia que si la haces pequeña. Con el dedo en el móvil suele quedar mejor que con el ratón. Puedes borrarla y repetirla las veces que quieras, y una vez colocada se ajusta de tamaño tirando de su esquina."
+        },
+        {
+          "q": "¿Se guarda mi trabajo si cierro la pestaña?",
+          "a": "No, y es a propósito: no se guarda nada en ningún servidor ni en tu navegador. Si cierras o recargas la página antes de descargar, pierdes las ediciones y hay que empezar de nuevo. Descarga el archivo antes de cerrar."
         }
-      ]
+      ],
+      "pasos": {
+        "titulo": "¿Cómo editar un PDF gratis paso a paso?",
+        "parrafos": [
+          "Al soltar el documento aparece la rejilla con todas sus páginas, y cada miniatura trae sus propios controles debajo: las dos flechas la mueven una posición, el icono circular la gira noventa grados, la papelera la elimina y el lápiz abre el editor. Ese lápiz es la parte que más se busca. Dentro verás la página a tamaño grande y dos herramientas: escribir texto, indicando el tamaño en puntos (10 a 12 equivale a la letra normal de un documento) y el color, y <strong>dibujar tu firma</strong> en el recuadro con el ratón o con el dedo. Lo que añadas aparece encima de la página y se coloca arrastrándolo; la firma además se agranda tirando de su esquina. Al pulsar «Hecho», la miniatura de esa página queda marcada como <em>editada</em>, para que veas de un vistazo dónde has tocado. Repite en las páginas que necesites y descarga: todo sale en un único archivo.",
+          "Hay un límite que conviene tener claro antes de empezar: <strong>no se puede reescribir el texto que ya está dentro del PDF</strong>. Ninguna herramienta lo hace bien de forma automática, porque obligaría a reconstruir la maquetación original con sus tipografías. Se puede escribir encima, que es lo que resuelve el 90&nbsp;% de los casos reales: rellenar una casilla, poner la fecha, añadir una nota o firmar. Si de verdad necesitas cambiar un párrafo, edita el documento de origen y vuelve a exportarlo a PDF. Y una advertencia importante que casi nadie da: <strong>tapar un dato escribiendo encima no lo elimina del archivo</strong>. El texto original sigue ahí debajo y cualquiera puede seleccionarlo y copiarlo. Para ocultar información sensible de verdad, elimina la página entera o corrige el documento antes de generar el PDF."
+        ]
+      }
     },
     {
       "slug": "unir-pdf-gratis-sin-marca-de-agua",
@@ -250,8 +288,27 @@
         {
           "q": "¿Se pierde calidad al dividir?",
           "a": "No. Las páginas se copian sin recomprimir: cada archivo conserva el texto, las tipografías y las imágenes del original."
+        },
+        {
+          "q": "¿Cómo abro el ZIP en el móvil?",
+          "a": "En Android, desde el gestor de archivos: toca el ZIP y elige «Extraer». En iPhone, desde la app Archivos: mantén pulsado el ZIP y elige «Descomprimir». Los dos sistemas lo hacen de serie, no hace falta instalar ninguna aplicación."
+        },
+        {
+          "q": "¿Puedo sacar solo un trozo, sin que me descargue un ZIP?",
+          "a": "Sí. Elige «Por rangos» y escribe un único rango, por ejemplo 4-9. Como el resultado es un solo archivo, se descarga directamente como PDF sin empaquetar."
+        },
+        {
+          "q": "¿Cómo se llaman los archivos que salen?",
+          "a": "Toman el nombre que tú escribas más un sufijo: contrato-1.pdf, contrato-2.pdf… cuando divides página a página, y contrato-4-9.pdf cuando el trozo abarca un rango. Así se ordenan solos en la carpeta."
         }
-      ]
+      ],
+      "pasos": {
+        "titulo": "¿Cómo dividir un PDF paso a paso?",
+        "parrafos": [
+          "Suelta el documento y entra en el modo <strong>Dividir</strong>. Tienes dos formas de cortar. «Cada página, un archivo» no necesita que configures nada: obtendrás tantos PDF como páginas tenga, numerados. «Por rangos que yo indique» abre un campo donde escribes los trozos separados por comas, por ejemplo <code>1-3, 5, 8-</code>, que produce tres archivos: uno con las páginas 1 a 3, otro con la 5 sola y otro desde la 8 hasta el final. El nombre que pongas en «Nombre del archivo» se usa como base y la herramienta le añade el sufijo: <code>contrato-1.pdf</code>, <code>contrato-2.pdf</code>… o <code>contrato-1-3.pdf</code> cuando el trozo abarca varias páginas. Un detalle que evita disgustos: <strong>los números se refieren al orden que ves ahora en la rejilla</strong>, no al del archivo que soltaste, así que si antes has reordenado o borrado páginas, cuentan sobre ese resultado.",
+          "Cuando el corte produce más de un archivo, los recibes juntos en un ZIP, que es simplemente una caja para no descargar veinte cosas a mano. Se abre sin instalar nada: en Windows, doble clic y «Extraer todo»; en Mac, doble clic y aparece la carpeta al lado; en Android, desde el gestor de archivos, tocando el ZIP y eligiendo «Extraer»; en iPhone, desde la app Archivos, manteniendo pulsado y eligiendo «Descomprimir». Y si lo que necesitas es solo un trozo concreto, hay un atajo que mucha gente no ve: escribe <strong>un único rango</strong> y la descarga será directamente ese PDF suelto, sin ZIP de por medio. Los archivos resultantes conservan el texto seleccionable y la calidad del original, porque las páginas se copian sin recomprimir."
+        ]
+      }
     },
     {
       "slug": "comprimir-pdf-para-enviar-por-correo-sin-registro",
@@ -320,8 +377,27 @@
         {
           "q": "¿Mi documento se sube a algún servidor?",
           "a": "No. La compresión se calcula en tu navegador; el archivo no sale de tu dispositivo."
+        },
+        {
+          "q": "¿Cómo sé si mi PDF es escaneado o de texto?",
+          "a": "Ábrelo e intenta seleccionar una palabra con el ratón. Si se marca en azul, es texto nativo y comprimirlo lo convertirá en imágenes. Si no puedes seleccionar nada, es un escaneado y la compresión le vendrá muy bien. La herramienta también lo comprueba sola y te avisa."
+        },
+        {
+          "q": "¿Por qué mi PDF ha aumentado de tamaño al comprimirlo?",
+          "a": "Porque era de texto nativo. Ese tipo de documento se guarda como instrucciones de dibujo, que ocupan muy poco; al rasterizarlo se convierte en una fotografía por página y eso puede pesar más que el original. Desactiva la compresión: para esos archivos no aporta nada."
+        },
+        {
+          "q": "¿Puedo comprimir dos veces el mismo archivo para que pese menos?",
+          "a": "No compensa. La segunda pasada parte de imágenes ya degradadas, así que pierdes calidad muy rápido a cambio de poco peso. Vuelve al PDF original y baja directamente la resolución a 96 ppp."
         }
-      ]
+      ],
+      "pasos": {
+        "titulo": "¿Cómo comprimir un PDF sin perder calidad paso a paso?",
+        "parrafos": [
+          "Suelta el documento y asegúrate de estar en el modo <strong>Comprimir</strong>. Aparecerán dos controles: la resolución, con tres opciones, y un deslizador de detalle de imagen. Empieza por 144&nbsp;ppp con el detalle al 72&nbsp;%, que es el punto de partida razonable para casi todo, pon un nombre al archivo y pulsa «Comprimir y descargar». Al terminar verás el <strong>tamaño final, el original y el porcentaje ahorrado</strong>. Ese número es la parte importante: ábrelo, míralo a tamaño real en tu visor y decide. Si se lee perfectamente y aún pesa demasiado, repite con 96&nbsp;ppp; si ves el texto pastoso, sube a 200. Iterar no cuesta nada porque <strong>el archivo de tu disco no se modifica</strong>: puedes probar tres ajustes en un minuto y quedarte con el que prefieras.",
+          "Lo que decide el resultado no son los ajustes, es qué hay dentro del PDF. Un documento <strong>escaneado</strong> es una fotografía por página, y ahí bajar la resolución es exactamente lo que hay que hacer: reducciones del 60&nbsp;% al 90&nbsp;% sin que la lectura se resienta. Un documento de <strong>texto nativo</strong>, el que sale de exportar un Word, no está hecho de píxeles sino de instrucciones de dibujo, y convertirlo en imágenes puede dejarlo igual o incluso más pesado, además de quitarte la posibilidad de seleccionar y buscar el texto. Para saber cuál tienes, abre el PDF e intenta seleccionar una palabra con el ratón: si se marca en azul, es texto nativo. La herramienta lo detecta sola y te avisa antes de exportar, pero conviene entender por qué."
+        ]
+      }
     },
     {
       "slug": "firmar-pdf-online-gratis-sin-registro",
@@ -425,8 +501,27 @@
         {
           "q": "¿Puedo mezclar imágenes y PDF?",
           "a": "Sí. Todo entra en la misma rejilla y sale como un único documento, en el orden que tú dejes."
+        },
+        {
+          "q": "¿Puedo poner dos fotos en la misma página?",
+          "a": "No: cada imagen ocupa su propia página. Si necesitas varias juntas en una sola hoja, móntalas antes en un collage con cualquier editor de imágenes y trae aquí la imagen resultante."
+        },
+        {
+          "q": "¿Puedo recortar o enderezar la foto desde aquí?",
+          "a": "Girar sí, de noventa en noventa grados. Recortar o corregir una foto tomada en diagonal, no. Hazlo antes desde la galería de tu móvil, que ya trae esa función, y luego suelta la imagen ya recortada."
+        },
+        {
+          "q": "¿Qué pasa con las zonas transparentes de un PNG?",
+          "a": "Se conservan tal cual dentro del PDF, y al verlo o imprimirlo se muestran del color del papel, es decir, blancas. Si necesitas otro fondo, aplícaselo a la imagen antes de convertirla."
         }
-      ]
+      ],
+      "pasos": {
+        "titulo": "¿Cómo convertir imágenes JPG a PDF paso a paso?",
+        "parrafos": [
+          "Suelta todas las imágenes de golpe: cada una se convertirá en una página y las verás en miniatura en el orden en que entraron. Colócalas arrastrando, o con las flechas de cada miniatura si estás en el móvil. Las fotos hechas con el teléfono suelen entrar tumbadas: el icono circular las gira de noventa en noventa grados hasta dejarlas derechas. Después elige el <strong>tamaño de página</strong>, que es la decisión que más cambia el resultado. «Ajustar a A4 con margen» centra cada imagen en una hoja estándar, en vertical u horizontal según la foto: es lo que quieres para imprimir o para un trámite, porque todas las páginas salen del mismo tamaño, como un documento de verdad. «Tamaño real de la imagen» hace la página exactamente del tamaño de la foto, sin bordes blancos, y es lo mejor para capturas de pantalla.",
+          "La calidad del PDF depende casi por completo de la calidad de las fotos, porque los JPG y los PNG se incrustan <strong>tal cual, sin volver a comprimirlos</strong>. Si estás fotografiando documentos en papel, tres cosas marcan la diferencia: luz uniforme y sin sombra encima (la de una ventana de día es mejor que el flash), el papel bien plano, y encuadrar de frente en vez de en diagonal. Conviene además recortar la foto desde la galería del móvil antes de traerla aquí, porque esta herramienta gira pero no recorta. Y si sueltas imágenes y PDF a la vez, todo entra en la misma rejilla y sale como un único documento: va muy bien para añadir la foto de un albarán al final de un contrato."
+        ]
+      }
     },
     {
       "slug": "pasar-pdf-a-jpg-alta-resolucion",
