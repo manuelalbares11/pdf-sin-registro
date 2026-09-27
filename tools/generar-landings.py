@@ -84,6 +84,12 @@ def validar(datos):
             errores.append("%s: meta description de %d caracteres (max 160)" % (etiqueta, len(p["meta"])))
         if len(p.get("faq", [])) < 4:
             errores.append("%s: menos de 4 preguntas frecuentes" % etiqueta)
+        pasos = p.get("pasos")
+        if pasos is not None:
+            if not pasos.get("titulo") or not pasos.get("parrafos"):
+                errores.append("%s: 'pasos' necesita 'titulo' y 'parrafos'" % etiqueta)
+            elif len(pasos["parrafos"]) < 2:
+                errores.append("%s: 'pasos' con menos de 2 parrafos" % etiqueta)
     if "index" not in slugs:
         errores.append("falta la pagina 'index'")
     return errores
@@ -127,6 +133,19 @@ def bloque_casos(casos):
             % (ICONOS.get(c.get("icono"), ICONO_POR_DEFECTO), esc_attr(c["titulo"]), c["texto"])
         )
     return "\n        ".join(partes)
+
+
+def bloque_pasos(pasos):
+    """Seccion "paso a paso" propia de una landing. Opcional: las paginas que
+    no la definen no dejan hueco ni seccion vacia."""
+    if not pasos:
+        return ""
+    cuerpo = "".join("<p>%s</p>" % t for t in pasos["parrafos"])
+    return ('    <section class="section">\n'
+            '      <div class="wrap--narrow prose" style="padding:0">\n'
+            '        <h2>%s</h2>%s\n'
+            '      </div>\n'
+            '    </section>\n' % (esc_attr(pasos["titulo"]), cuerpo))
 
 
 def bloque_faq(faq):
@@ -329,6 +348,7 @@ def generar():
             "{{NAV_HTML}}": bloque_nav(paginas, p["slug"]),
             "{{CASOS_HTML}}": bloque_casos(casos),
             "{{FAQ_HTML}}": bloque_faq(p["faq"]),
+            "{{PASOS_HTML}}": bloque_pasos(p.get("pasos")),
             "{{RELACIONADAS_HTML}}": bloque_relacionadas(paginas, p["slug"]),
             "{{JSONLD_APP}}": jsonld(app_ld),
             "{{JSONLD_FAQ}}": jsonld(faq_ld),

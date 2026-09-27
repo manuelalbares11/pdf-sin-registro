@@ -126,8 +126,27 @@
         {
           "q": "¿Puedo unir un PDF con un documento de Word?",
           "a": "No directamente: primero guarda el Word como PDF desde el propio Word (Archivo, Guardar como, PDF) y luego súmalo aquí."
+        },
+        {
+          "q": "¿Cómo uno varios PDF desde el móvil?",
+          "a": "Igual que en el ordenador. Pulsa la zona de soltar y el selector de tu móvil te dejará marcar varios archivos a la vez. Para cambiar el orden usa las flechas de cada miniatura en lugar de arrastrar, que en pantallas pequeñas es incómodo. El PDF final se guarda en tu carpeta de descargas habitual."
+        },
+        {
+          "q": "¿Puedo unir PDF protegidos con contraseña?",
+          "a": "No mientras estén cifrados: el navegador no puede leer su contenido. Ábrelos primero en el visor donde los consultas normalmente, quita la contraseña y vuelve a guardarlos. Después ya se pueden unir aquí con normalidad."
+        },
+        {
+          "q": "¿Funciona sin conexión a internet?",
+          "a": "Sí, una vez cargada la página. El motor que monta el PDF se descarga al abrirla y a partir de ahí todo ocurre dentro de tu equipo, así que si pierdes la conexión puedes seguir uniendo documentos y descargándolos sin problema."
         }
-      ]
+      ],
+      "pasos": {
+        "titulo": "¿Cómo unir PDFs gratis paso a paso?",
+        "parrafos": [
+          "Empieza soltando los archivos sobre el recuadro de arriba. Puedes marcar varios de golpe en el selector manteniendo pulsada la tecla Control (Comando en Mac), arrastrarlos todos juntos desde una carpeta, o pegarlos directamente con Ctrl+V. Lo que verás a continuación no es una lista de archivos, sino una <strong>rejilla con todas las páginas de todos los documentos</strong>, y ahí está la diferencia que evita el error más común al unir: colocar los archivos en un orden y descubrir después que dentro de uno de ellos las hojas estaban al revés. Arrastra cada miniatura hasta su sitio (en el móvil, usa las flechas de cada una, que es más cómodo que arrastrar en pantalla pequeña), gira con el icono circular las que entraron tumbadas y manda a la papelera las hojas en blanco o repetidas. Escribe por último el nombre que quieres que tenga el archivo y pulsa «Unir y descargar».",
+          "Al unir no se reimprime nada: cada página se copia tal cual desde su documento original. Por eso el texto sigue siendo seleccionable y buscable, los enlaces internos siguen funcionando y las imágenes conservan su resolución. La consecuencia práctica es que el archivo final pesa aproximadamente la suma de los originales; si va a ir por correo, marca la casilla «Reducir el tamaño al exportar» <em>antes</em> de pulsar el botón y te ahorras pasar por una segunda herramienta. Cuando lo tengas descargado, ábrelo y comprueba dos cosas antes de enviarlo: que el orden es el que querías y que no se ha colado ninguna página de más. Si algo no cuadra, no pasa nada: <strong>los archivos originales de tu disco no se modifican en ningún momento</strong>, así que basta con volver a empezar."
+        ]
+      }
     },
     {
       "slug": "juntar-varios-pdf-en-uno-online",
