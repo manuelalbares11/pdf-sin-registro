@@ -218,8 +218,27 @@
         {
           "q": "¿Cuánto cuesta?",
           "a": "Nada. La web se sostiene con los espacios de publicidad de la página, no cobrando por el uso de la herramienta."
+        },
+        {
+          "q": "¿En qué orden entran los archivos si los suelto todos a la vez?",
+          "a": "En el orden en que los entrega tu sistema, que suele ser el alfabético del cuadro de selección. Si el orden importa, renombra los archivos con un número delante (01-, 02-, 03-) antes de traerlos y entrarán ya colocados."
+        },
+        {
+          "q": "¿Cómo sé que no falta ningún documento?",
+          "a": "El contador que hay sobre la rejilla indica cuántas páginas y cuántos archivos se han cargado. Si el número de archivos no coincide con los que soltaste, alguno no se ha podido abrir y verás un aviso en amarillo con su nombre."
+        },
+        {
+          "q": "¿Puedo juntar veinte o treinta documentos de golpe?",
+          "a": "Sí, mientras el total se mantenga dentro de lo razonable para tu dispositivo: unas 500 páginas como referencia. Si son muchos y pesados, júntalos por tandas y luego une los resultados."
         }
-      ]
+      ],
+      "pasos": {
+        "titulo": "¿Cómo juntar varios PDF en uno paso a paso?",
+        "parrafos": [
+          "Selecciónalos todos de una vez en lugar de ir de uno en uno: en el cuadro de selección, pulsa el primero y después el último con la tecla Mayúsculas pulsada, o usa Control+E (Comando+A en Mac) para marcarlos todos. Entrarán en el orden en que los entrega tu sistema, que normalmente es el alfabético que ves en la ventana. Ahí está el truco que ahorra más tiempo cuando son muchos: <strong>renombra los archivos con un número delante antes de traerlos</strong> —<code>01-portada.pdf</code>, <code>02-memoria.pdf</code>, <code>03-anexo.pdf</code>— y entrarán ya colocados, sin tener que arrastrar nada. Si alguno se cuela en mal sitio, arrastra su miniatura o usa las flechas.",
+          "Antes de descargar, mira el contador que hay encima de la rejilla: dice cuántas páginas y cuántos archivos hay cargados. Es la forma más rápida de detectar que uno no se ha abierto, algo que pasa si estaba protegido con contraseña o dañado; en ese caso verás además un aviso en amarillo diciéndote cuál ha sido. Comprueba que el número de archivos coincide con los que soltaste y que el total de páginas cuadra con lo que esperabas. Con documentación para una administración o una gestoría, ese vistazo de dos segundos evita el correo de vuelta pidiéndote el anexo que faltaba."
+        ]
+      }
     },
     {
       "slug": "unir-pdf-pesados-gratis",
@@ -253,8 +272,27 @@
         {
           "q": "¿Funciona sin conexión?",
           "a": "Una vez cargada la página, el proceso no necesita internet: si pierdes la conexión, la herramienta sigue funcionando."
+        },
+        {
+          "q": "¿Qué pasa si se queda sin memoria a mitad?",
+          "a": "El navegador se ralentiza o cierra la pestaña. No se pierde nada de tu disco, porque los archivos originales no se tocan en ningún momento: basta con volver a empezar con menos documentos a la vez."
+        },
+        {
+          "q": "¿Puedo unir por tandas?",
+          "a": "Sí, y es lo que recomendamos con material pesado. Une un grupo y descarga, repite con el siguiente, y al final une los archivos resultantes, que serán muchos menos y más manejables."
+        },
+        {
+          "q": "¿Va más rápido en el ordenador que en el móvil?",
+          "a": "Sí, y bastante. El trabajo lo hace tu procesador, así que un ordenador con memoria de sobra aguanta documentos mucho más grandes y los monta en menos tiempo que un teléfono."
         }
-      ]
+      ],
+      "pasos": {
+        "titulo": "¿Cómo unir PDF pesados paso a paso?",
+        "parrafos": [
+          "Con archivos grandes, el orden de las acciones importa. Antes de empezar, <strong>cierra las pestañas que no estés usando</strong>: la memoria que ocupan es la misma que le falta al navegador para abrir tus documentos. Suelta después los PDF y espera a que aparezcan todas las miniaturas; en archivos de decenas de megas eso puede tardar unos segundos, y es señal de que se están leyendo bien. Coloca las páginas, quita lo que sobre y, si el resultado va a viajar por correo, marca «Reducir el tamaño al exportar» antes de pulsar el botón: comprimir al final, sobre el documento ya montado, da mejor resultado que comprimir cada archivo por separado y unirlos después.",
+          "Si el navegador se ralentiza mucho o la pestaña se cierra sola, has tocado el techo de memoria de tu dispositivo. No es un límite que podamos subir: no hay servidor al que delegar el trabajo, y esa es justamente la razón de que no haya tope de subida ni cola de espera. La solución práctica es <strong>trabajar por tandas</strong>: une los cinco primeros documentos y descarga, repite con los cinco siguientes, y termina uniendo los dos o tres archivos resultantes, que ya son muchos menos. Un ordenador aguanta bastante más que un móvil, así que si tienes ambos a mano, haz los trabajos grandes en el ordenador."
+        ]
+      }
     },
     {
       "slug": "dividir-pdf-en-paginas-separadas-gratis",
@@ -342,8 +380,27 @@
         {
           "q": "¿Se sube mi documento a algún sitio para comprimirlo?",
           "a": "No. La compresión se calcula en tu navegador; el archivo no sale de tu dispositivo en ningún momento."
+        },
+        {
+          "q": "¿Cuánto puede pesar un adjunto en Gmail o en Outlook?",
+          "a": "Gmail admite hasta 25 MB por mensaje y Outlook se queda en torno a los 20. Los buzones de empresa y las administraciones suelen ser más estrictos: 5 MB, y a veces 2. Comprueba el límite concreto antes de comprimir."
+        },
+        {
+          "q": "¿Por qué un archivo de 24 MB no entra en un correo que admite 25?",
+          "a": "Porque los adjuntos se codifican como texto para poder viajar y en el proceso crecen alrededor de un tercio. Un PDF de 24 MB ocupa unos 32 dentro del mensaje. Deja siempre margen: para un límite de 25 MB, apunta a 15."
+        },
+        {
+          "q": "Si ni comprimido entra, ¿qué hago?",
+          "a": "Sepáralo en dos o tres partes con el modo Dividir y envíalas en correos distintos, o súbelo a un servicio de enlaces y manda solo la dirección. Bajar más la resolución a partir de cierto punto ya deja el documento ilegible."
         }
-      ]
+      ],
+      "pasos": {
+        "titulo": "¿Cómo comprimir un PDF para enviarlo por correo paso a paso?",
+        "parrafos": [
+          "Antes de comprimir, averigua cuánto puedes enviar. <strong>Gmail corta en 25&nbsp;MB</strong> por mensaje y Outlook suele quedarse en torno a los 20, pero muchas administraciones y buzones de empresa bajan el listón a 5&nbsp;MB, y algunos formularios a 2. Suelta el documento, entra en el modo Comprimir, empieza por 144&nbsp;ppp, ponle nombre y descarga. Verás el tamaño final junto al original y el porcentaje ahorrado. Si sigue por encima de tu límite, repite con 96&nbsp;ppp y baja el deslizador de detalle: en un escaneado normal esa combinación suele dejar el archivo por debajo de los 2&nbsp;MB sin que deje de leerse con comodidad.",
+          "Apunta a quedarte <strong>bastante por debajo del límite, no justo en el borde</strong>, y esta es la razón que casi nadie explica: al adjuntar un archivo, el correo lo convierte a texto para poder transportarlo, y en esa conversión <strong>crece alrededor de un tercio</strong>. Por eso un PDF de 24&nbsp;MB puede ser rechazado por un servicio que dice admitir 25: al viajar ocupa unos 32. Si dejas el archivo en 15&nbsp;MB para un límite de 25, no tendrás sorpresas. Y si ni comprimido entra, tienes dos salidas razonables: separarlo en dos o tres partes con el modo Dividir y mandarlas en correos distintos, o subirlo a un servicio de enlaces y enviar solo la dirección."
+        ]
+      }
     },
     {
       "slug": "comprimir-pdf-sin-perder-calidad",
@@ -431,8 +488,27 @@
         {
           "q": "¿Puedo añadir la fecha o mi DNI junto a la firma?",
           "a": "Sí, con la herramienta de texto del mismo editor: eliges tamaño y color y lo colocas arrastrando."
+        },
+        {
+          "q": "¿Cómo coloco la firma justo encima de la línea de puntos?",
+          "a": "Arrástrala hasta ahí y ajusta el tamaño con el tirador de la esquina inferior derecha. Queda natural cuando ocupa algo menos que el ancho de la línea y sobresale ligeramente por encima, como al firmar en papel."
+        },
+        {
+          "q": "¿Qué hago si la firma me sale demasiado grande o pequeña?",
+          "a": "No hace falta repetirla: se redimensiona tirando de su esquina, y mantiene la proporción. Si lo que no te gusta es el trazo, bórrala con «Borrar firma» y dibújala de nuevo las veces que quieras."
+        },
+        {
+          "q": "¿Puedo usar una foto de mi firma en papel en vez de dibujarla?",
+          "a": "No como firma superpuesta: el recuadro es para dibujarla a mano. Una foto puedes añadirla como página del documento con el modo JPG a PDF, pero no colocarla encima de una página existente."
         }
-      ]
+      ],
+      "pasos": {
+        "titulo": "¿Cómo firmar un PDF paso a paso?",
+        "parrafos": [
+          "Suelta el documento y localiza en la rejilla la página que lleva la línea de la firma, normalmente la última. Pulsa el <strong>icono del lápiz</strong> de esa miniatura: se abrirá con la página a tamaño grande y, debajo, un recuadro en blanco. Dibuja ahí tu firma con el ratón, con el trackpad o con el dedo si estás en el móvil, y pulsa «Añadir firma a la página». Aparecerá sobre el documento, en el centro. Arrástrala hasta la línea de puntos y ajústale el tamaño tirando de la <strong>esquina inferior derecha</strong>, que es donde está el tirador. Como referencia, una firma queda natural cuando ocupa algo menos que el ancho de la línea sobre la que se apoya y sobresale un poco por encima, igual que al firmar en papel.",
+          "Si no te convence, bórrala y repítela: se puede hacer tantas veces como quieras, y sale mejor dibujándola grande y sin prisa que intentando hacerla pequeña y exacta. Cuando esté colocada, pulsa «Hecho» y la miniatura quedará marcada como <em>editada</em>. Repite en cada página que lo necesite y descarga una sola vez. Conviene recordar qué estás haciendo exactamente: esto estampa tu <strong>firma manuscrita</strong> sobre el documento, con el mismo valor que firmar en papel y escanear. Sirve para el día a día —un alquiler entre particulares, un presupuesto aceptado, una autorización del colegio— pero no sustituye a la firma electrónica cualificada que exigen Hacienda, la Seguridad Social o una notaría, para la que necesitas tu certificado digital."
+        ]
+      }
     },
     {
       "slug": "anadir-texto-a-un-pdf-gratis",
@@ -466,8 +542,27 @@
         {
           "q": "¿Sirve para rellenar formularios oficiales?",
           "a": "Sirve para escribir encima de cualquier PDF. Si el impreso exige firma electrónica cualificada, necesitarás además tu certificado digital."
+        },
+        {
+          "q": "¿Qué tamaño de letra uso para rellenar una casilla?",
+          "a": "Entre 10 y 12 puntos para la letra normal de un documento, y 14 o más para casillas grandes. El mejor método es comparar con el texto impreso que ya hay al lado y ajustar hasta que se vean del mismo tamaño."
+        },
+        {
+          "q": "¿Puedo escribir varias líneas de una vez?",
+          "a": "El campo admite una línea cada vez. Para un párrafo o una dirección, añade un texto por línea y colócalos uno debajo de otro; así además puedes alinear cada línea exactamente donde la necesitas."
+        },
+        {
+          "q": "¿Puedo cambiar el color para que se distinga de lo impreso?",
+          "a": "Sí. El color por defecto es un negro suave, pero puedes poner azul en el campo de color, como cuando se rellena un impreso con bolígrafo. Así queda claro qué has añadido tú."
         }
-      ]
+      ],
+      "pasos": {
+        "titulo": "¿Cómo añadir texto a un PDF paso a paso?",
+        "parrafos": [
+          "Abre el editor con el lápiz de la página donde quieras escribir. Arriba verás tres campos: el texto, el tamaño y el color. Escribe la frase, elige el tamaño <strong>en puntos</strong> —la misma unidad que usa el PDF, donde 10 a 12 equivale a la letra normal de un documento y 14 o más sirve para casillas grandes— y pulsa «Añadir texto». Aparecerá en la esquina superior izquierda de la página; arrástralo hasta su sitio. Para acertar con el tamaño, compáralo con el texto impreso que ya hay al lado: si tu frase se ve claramente más grande o más pequeña que la del formulario, ajústala y vuelve a colocarla hasta que encaje.",
+          "El campo admite <strong>una línea cada vez</strong>. Si necesitas escribir un párrafo o varias líneas de una dirección, añade un texto por línea y colócalos uno debajo de otro: es más trabajo, pero permite alinear cada línea exactamente donde toca, que en un impreso es justo lo que se necesita. Un detalle útil: cambia el color a azul si quieres que se distinga de lo impreso, tal como se hace al rellenar un formulario con bolígrafo. Se admiten acentos, eñes y los signos del español. Y el texto se incrusta como texto real, no como imagen, así que en el archivo final se puede seleccionar y copiar igual que el resto del documento."
+        ]
+      }
     },
     {
       "slug": "convertir-jpg-a-pdf-sin-registro",
@@ -555,8 +650,27 @@
         {
           "q": "¿Se sube mi PDF para convertirlo?",
           "a": "No. Las páginas se dibujan y se exportan en tu navegador; el archivo no sale de tu dispositivo."
+        },
+        {
+          "q": "¿Cuántos píxeles tendrá cada imagen?",
+          "a": "Con una hoja A4, unos 794 × 1123 px a 96 ppp, unos 1240 × 1754 a 150 ppp y unos 2480 × 3508 a 300 ppp. Si la página del PDF tiene otro tamaño, la proporción se mantiene."
+        },
+        {
+          "q": "¿Por qué pesan tanto las imágenes a 300 ppp?",
+          "a": "Porque tienen cuatro veces más píxeles que a 150. Esa resolución solo compensa si vas a imprimir o a ampliar un detalle; para leer en pantalla no se nota la diferencia y el archivo se multiplica."
+        },
+        {
+          "q": "¿Puedo subir estas imágenes a WhatsApp o a redes sociales?",
+          "a": "Sí, son archivos JPG o PNG normales. Para mensajería y redes, 96 o 150 ppp es más que suficiente: las plataformas recomprimen las imágenes al subirlas, así que enviar 300 ppp solo gasta datos."
         }
-      ]
+      ],
+      "pasos": {
+        "titulo": "¿Cómo pasar un PDF a JPG paso a paso?",
+        "parrafos": [
+          "Suelta el documento, entra en el modo PDF&nbsp;→&nbsp;JPG y elige dos cosas: resolución y formato. La resolución decide cuántos píxeles tendrá cada imagen, y con una hoja A4 los números salen así: a 96&nbsp;ppp obtienes unos <strong>794&nbsp;×&nbsp;1123&nbsp;px</strong>, a 150&nbsp;ppp unos <strong>1240&nbsp;×&nbsp;1754</strong> y a 300&nbsp;ppp unos <strong>2480&nbsp;×&nbsp;3508</strong>. Para ver en pantalla o mandar por mensajería, 96 sobra. Para publicar, recortar o leer cómodamente, 150 es el punto dulce. Y 300 solo si vas a imprimir o a ampliar una parte, porque multiplica el peso. Si solo necesitas algunas páginas, elimínalas de la rejilla con la papelera antes de convertir: se convierte únicamente lo que quede.",
+          "Sobre el formato, la regla práctica es mirar qué hay en la página. <strong>JPG</strong> para páginas con fotografías o escaneadas: pesa mucho menos y la pérdida no se aprecia. <strong>PNG</strong> para texto, gráficos, planos o cualquier cosa con líneas finas y bordes nítidos, porque no pierde nada; a cambio puede ocupar varias veces más. Si el documento tiene más de una página, las imágenes se descargan juntas en un ZIP numeradas por orden; con una sola página, se descarga la imagen directamente. Las imágenes que salen son archivos normales: puedes subirlas a redes sociales, adjuntarlas a un mensaje o insertarlas en una presentación sin ningún paso intermedio."
+        ]
+      }
     },
     {
       "slug": "reordenar-paginas-pdf-online",
@@ -590,8 +704,27 @@
         {
           "q": "¿Puedo deshacer un cambio?",
           "a": "Puedes volver a mover o girar cuantas veces quieras antes de exportar; nada se aplica al archivo hasta que pulsas descargar."
+        },
+        {
+          "q": "¿Cómo intercalo las páginas de dos escaneados, impares y pares?",
+          "a": "Suelta los dos archivos a la vez: todas sus páginas aparecen en la misma rejilla. A partir de ahí es cuestión de arrastrar para alternarlas, impar y par, hasta dejar el documento completo y en orden."
+        },
+        {
+          "q": "¿Puedo llevar una página del final al principio sin arrastrar?",
+          "a": "Sí, pulsando repetidamente la flecha izquierda de esa miniatura: la mueve una posición cada vez. Es lo más cómodo en móvil, donde arrastrar por una lista larga es incómodo."
+        },
+        {
+          "q": "¿Se renumeran las páginas al moverlas?",
+          "a": "El número que ves bajo cada miniatura se recalcula al instante, así que la rejilla siempre muestra el documento tal y como va a quedar. Ojo: eso es la posición en el documento, no un número impreso dentro de la página."
         }
-      ]
+      ],
+      "pasos": {
+        "titulo": "¿Cómo reordenar las páginas de un PDF paso a paso?",
+        "parrafos": [
+          "Suelta el documento y verás todas sus páginas en miniatura, numeradas. Para mover una, arrástrala y suéltala sobre la posición que debe ocupar: mientras la arrastras, la miniatura de destino se marca con un borde de color para que sepas exactamente dónde va a caer. Al soltarla, <strong>la numeración se recalcula sola</strong> y todas las demás se corren, así que lo que ves en pantalla es siempre el documento tal y como se va a descargar. En el móvil, arrastrar en una pantalla pequeña es incómodo: usa las dos flechas que lleva cada miniatura debajo, que mueven la página una posición a izquierda o derecha. Para llevar una página del final al principio, pulsa la flecha varias veces seguidas.",
+          "Hay un caso que se repite mucho y que se resuelve aquí en un minuto: el <strong>escaneado a doble cara con un alimentador que solo lee una</strong>. Acabas con dos archivos, uno con las páginas impares y otro con las pares, a menudo en orden inverso. Suelta los dos a la vez y tendrás todas las páginas de ambos en la misma rejilla; entonces solo hay que intercalarlas: impar, par, impar, par. Si el archivo de las pares venía del revés, gíralo mentalmente empezando por el final. Al terminar tendrás un único documento correcto, y como las páginas se copian sin recomprimir, conserva el texto y la calidad del escaneo original."
+        ]
+      }
     },
     {
       "slug": "extraer-paginas-de-un-pdf-sin-marca-de-agua",
@@ -625,8 +758,27 @@
         {
           "q": "¿Puedo obtener las dos mitades de un documento?",
           "a": "Sí, en dos pasos: descarga la primera selección, vuelve a soltar el original y quédate con el resto. El archivo de tu disco nunca se modifica."
+        },
+        {
+          "q": "¿Cuál es la diferencia entre extraer y dividir?",
+          "a": "Extraer da un solo archivo con las páginas que te quedas. Dividir da varios archivos, uno por página o uno por rango, empaquetados en un ZIP. Para enviar unas páginas concretas, extrae; para trocear un lote, divide."
+        },
+        {
+          "q": "¿Puedo extraer páginas salteadas, como la 2, la 7 y la 15?",
+          "a": "Sí. Borra de la rejilla todas las demás y descarga: obtendrás un único PDF con esas tres, en ese orden. No tienen que ser consecutivas."
+        },
+        {
+          "q": "¿Se conserva la numeración original del documento?",
+          "a": "El documento nuevo cuenta desde la página 1. Si el original llevaba los números impresos dentro de la hoja, esos se conservan como parte de la página y pueden no coincidir con el orden del extracto."
         }
-      ]
+      ],
+      "pasos": {
+        "titulo": "¿Cómo extraer páginas de un PDF paso a paso?",
+        "parrafos": [
+          "Suelta el documento y localiza en la rejilla las páginas que quieres conservar. El procedimiento es al revés de lo que parece: en lugar de marcar las que te llevas, <strong>elimina con la papelera todas las que no</strong>. Lo que quede en pantalla es exactamente lo que se descargará, con la numeración ya recalculada. Sirve igual para páginas seguidas que salteadas: si necesitas la 2, la 7 y la 15 de un informe, borra el resto y te llevas un único documento con esas tres. Ponle nombre en el campo correspondiente antes de descargar, porque cuando envías un extracto a alguien, un archivo llamado «anexo-3.pdf» se entiende mucho mejor que el nombre original del informe completo.",
+          "Conviene distinguirlo de dividir, porque la gente llega buscando una cosa y necesita la otra. <strong>Extraer produce un solo archivo</strong> con las páginas que te quedas; <strong>dividir produce varios</strong>, uno por página o uno por rango, y te los entrega en un ZIP. Si lo que quieres es mandar tres páginas a una persona, extrae. Si lo que quieres es trocear un lote de facturas escaneadas en un archivo por factura, divide. Una nota para no llevarse sorpresas: el documento nuevo empieza a contar desde la página 1, así que si el original tenía los números impresos dentro de la hoja, esos se mantienen tal cual y pueden no coincidir con el orden del extracto."
+        ]
+      }
     },
     {
       "slug": "eliminar-paginas-de-un-pdf-gratis",
@@ -660,8 +812,27 @@
         {
           "q": "¿Deja marca de agua?",
           "a": "No. La descarga es directa y sin elementos añadidos."
+        },
+        {
+          "q": "¿Cómo elimino muchas páginas de golpe?",
+          "a": "Con la papelera se van de una en una. Si vas a quedarte con pocas, es más rápido usar el modo Dividir por rangos y escribir solo el tramo que conservas: al ser un único rango se descarga como PDF suelto."
+        },
+        {
+          "q": "¿Cómo compruebo que he quitado exactamente lo que quería?",
+          "a": "La rejilla muestra en todo momento el documento tal como va a quedar, con la numeración ya recalculada. Aun así, abre el archivo descargado y dale un repaso antes de enviarlo: en esta operación un descuido se paga caro."
+        },
+        {
+          "q": "¿Los datos de la página eliminada siguen dentro del archivo?",
+          "a": "No. El PDF se reconstruye solo con las páginas que dejas, así que el contenido eliminado no forma parte del documento descargado y no se puede recuperar de él."
         }
-      ]
+      ],
+      "pasos": {
+        "titulo": "¿Cómo eliminar páginas de un PDF paso a paso?",
+        "parrafos": [
+          "Suelta el documento y recorre la rejilla de miniaturas buscando lo que sobra: hojas en blanco, la portada del fax, una página duplicada, el anexo que no toca compartir con ese destinatario. Pulsa el <strong>icono de la papelera</strong> de cada una y desaparecerá al momento, con la numeración recalculándose sola. Si tienes que quitar muchas y quedarte con pocas, hay un camino más rápido que ir una a una: usa el modo <strong>Dividir por rangos</strong> y escribe solo el trozo que quieres conservar, por ejemplo <code>4-9</code>. Al ser un único rango, la descarga será directamente ese PDF, sin ZIP de por medio, y te habrás ahorrado veinte clics en la papelera.",
+          "Antes de enviar el resultado, ábrelo y repásalo. Es un consejo aburrido, pero eliminar páginas es justo la operación en la que un error se paga caro: o mandas de más, o mandas de menos. Lo que sí puedes dar por seguro es que <strong>lo eliminado no viaja escondido dentro del archivo</strong>. Esto no es una ocultación visual: el PDF se reconstruye desde cero únicamente con las páginas que dejaste, así que su contenido no llega al documento descargado y nadie puede recuperarlo de él. Sumado a que todo ocurre en tu equipo, el documento completo —el que sí tenía la página con los datos que no querías compartir— tampoco ha pasado por ningún servidor por el camino."
+        ]
+      }
     },
     {
       "slug": "rotar-paginas-pdf-online-gratis",
@@ -699,8 +870,27 @@
         {
           "q": "¿Se guarda el giro al descargar, o hay que registrarse para eso?",
           "a": "Se guarda siempre y no hay que registrarse. La rotación se escribe en el archivo descargado, así que se abre orientado en cualquier visor y en cualquier dispositivo."
+        },
+        {
+          "q": "¿Puedo girar todas las páginas a la vez?",
+          "a": "No, y es deliberado: cada página se gira por separado. Los documentos reales mezclan orientaciones, y un giro global dejaría torcidas las páginas que ya estaban bien."
+        },
+        {
+          "q": "¿Por qué se ve derecho en el ordenador y sale torcido al imprimir?",
+          "a": "Casi siempre es la opción «ajustar o rotar automáticamente» del cuadro de impresión, no el archivo. Desactívala y saldrá como lo ves en pantalla, porque la orientación va guardada dentro del PDF."
+        },
+        {
+          "q": "¿Girar afecta a la calidad o al peso del archivo?",
+          "a": "No. Girar no redibuja ni recomprime la página: solo cambia la orientación declarada en el documento. La calidad y el tamaño se quedan igual."
         }
-      ]
+      ],
+      "pasos": {
+        "titulo": "¿Cómo rotar las páginas de un PDF paso a paso?",
+        "parrafos": [
+          "Suelta el documento y localiza las páginas torcidas en la rejilla. Cada miniatura lleva debajo un <strong>icono circular</strong>: cada pulsación gira esa página noventa grados en el sentido de las agujas del reloj. Dos pulsaciones son ciento ochenta, para una hoja que entró boca abajo; tres, doscientos setenta. La miniatura se redibuja al momento, así que no hay que adivinar: giras hasta que se vea derecha y listo. No existe un botón de «girar todas», y es a propósito: los documentos reales mezclan orientaciones —un contrato vertical con una tabla apaisada en medio, o un escaneado donde solo tres hojas entraron al revés— y un giro global estropearía las que ya estaban bien.",
+          "Al descargar, la orientación queda <strong>escrita dentro del archivo</strong>, no es una preferencia de tu visor: quien lo reciba lo abrirá ya derecho, en el ordenador, en el móvil y al imprimir. Girar no vuelve a comprimir ni a redibujar nada, así que el peso y la calidad del documento se quedan exactamente como estaban. Si alguna vez ves un PDF derecho en pantalla pero te sale torcido en papel, el culpable no suele ser el archivo sino la opción de <em>ajustar o rotar automáticamente</em> del cuadro de impresión: desactívala y volverá a salir como lo ves. Y ya que estás en la rejilla, aprovecha para quitar las hojas en blanco y reordenar: todo sale en la misma descarga."
+        ]
+      }
     }
   ]
 }
