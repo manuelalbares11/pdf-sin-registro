@@ -356,6 +356,25 @@ dialog.editor::backdrop { background: rgba(12,12,18,.55); }
 .prose h2, .prose h3 { color: var(--ink); }
 .prose ul { padding-left: 20px; }
 .prose li { margin-bottom: .4em; }
+/* Las frases en negrita del texto explicativo deben destacar sobre el gris
+   del parrafo, no confundirse con el. */
+.prose strong { color: var(--ink); font-weight: 600; }
+
+/* Nombres de archivo y rangos dentro del texto. Sin esta regla salen con la
+   monoespaciada por defecto del navegador, que rompe la tipografia de la
+   pagina. Los colores vienen de los tokens, asi que funciona en claro y en
+   oscuro sin duplicar nada. */
+code {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+               "Liberation Mono", monospace;
+  font-size: .87em;
+  padding: .13em .45em;
+  border-radius: 6px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  color: var(--accent-dark);
+  white-space: nowrap;
+}
 
 .faq details {
   border: 1px solid var(--line); border-radius: var(--radius);
