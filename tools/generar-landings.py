@@ -205,6 +205,7 @@ def generar_legales(marca, dominio, version):
             "{{CANONICAL}}": dominio + "/" + p["slug"] + ".html",
             "{{FECHA}}": esc_attr(datos.get("fecha", "")),
             "{{CUERPO}}": cuerpo,
+            "{{ADSENSE_HEAD}}": bloque_adsense(id_editor()),
         }.items():
             html = html.replace(k, v)
 
@@ -219,6 +220,30 @@ def generar_legales(marca, dominio, version):
     return len(datos["paginas"])
 
 
+def id_editor():
+    """Devuelve el ID de editor de AdSense si esta puesto y bien formado."""
+    datos = json.loads(leer(DATA_LEGAL))
+    pub = (datos.get("adsense", {}) or {}).get("publisherId", "").strip()
+    return pub if re.match(r"^pub-\d{16}$", pub) else ""
+
+
+def bloque_adsense(pub):
+    """Script de AdSense para el <head>.
+
+    Vive aqui y no pegado a mano en el HTML por una razon practica: las
+    paginas se regeneran en cada despliegue, asi que cualquier cosa escrita
+    a mano en un .html desaparece en el siguiente. Si el ID no esta puesto
+    no se emite nada: la web no carga ningun script de terceros por defecto.
+    Ojo al prefijo, que es la confusion tipica: en ads.txt va "pub-..." y
+    aqui va "ca-pub-...".
+    """
+    if not pub:
+        return ("<!-- AdSense: pon tu publisherId en data/legales.json y "
+                "el script aparecera aqui en todas las paginas. -->")
+    return ('<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
+            '?client=ca-%s" crossorigin="anonymous"></script>' % pub)
+
+
 def generar_ads_txt():
     """ads.txt: Google exige este archivo para verificar que los anuncios de tu
     dominio los vendes tu y no alguien que se hace pasar por ti. Sin el, AdSense
@@ -228,17 +253,16 @@ def generar_ads_txt():
     peor que no tenerlo (Google lo lee como que el dominio autoriza a un tercero
     que no existe)."""
     datos = json.loads(leer(DATA_LEGAL))
-    pub = (datos.get("adsense", {}) or {}).get("publisherId", "").strip()
+    bruto = (datos.get("adsense", {}) or {}).get("publisherId", "").strip()
+    pub = id_editor()
     destino = os.path.join(ROOT, "ads.txt")
 
     if not pub:
         if os.path.exists(destino):
             os.remove(destino)
-        return False
-
-    if not re.match(r"^pub-\d{16}$", pub):
-        print("  AVISO: publisherId '%s' no tiene la forma pub- y 16 digitos; "
-              "no se genera ads.txt." % pub)
+        if bruto:
+            print("  AVISO: publisherId '%s' no tiene la forma pub- y 16 digitos; "
+                  "no se genera ads.txt ni el script." % bruto)
         return False
 
     # f08c47fec0942fa0 es el identificador de Google en el estandar ads.txt
@@ -270,6 +294,7 @@ def generar_404(marca, dominio, version, paginas):
         "{{CANONICAL}}": dominio + "/404.html",
         "{{FECHA}}": "",
         "{{CUERPO}}": cuerpo,
+        "{{ADSENSE_HEAD}}": bloque_adsense(id_editor()),
     }.items():
         html = html.replace(k, v)
     # la 404 no lleva fecha de actualizacion
@@ -349,6 +374,7 @@ def generar():
             "{{CASOS_HTML}}": bloque_casos(casos),
             "{{FAQ_HTML}}": bloque_faq(p["faq"]),
             "{{PASOS_HTML}}": bloque_pasos(p.get("pasos")),
+            "{{ADSENSE_HEAD}}": bloque_adsense(id_editor()),
             "{{RELACIONADAS_HTML}}": bloque_relacionadas(paginas, p["slug"]),
             "{{JSONLD_APP}}": jsonld(app_ld),
             "{{JSONLD_FAQ}}": jsonld(faq_ld),
