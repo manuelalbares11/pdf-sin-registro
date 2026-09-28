@@ -13,7 +13,7 @@
   },
   "adsense": {
     "_ayuda": "Pega aqui tu ID de editor de AdSense (Cuenta > Configuracion, empieza por pub-). Solo entonces se genera ads.txt, que Google exige para pagarte.",
-    "publisherId": ""
+    "publisherId": "pub-9792138142744931"
   },
   "fecha": "septiembre de 2026",
   "paginas": [
