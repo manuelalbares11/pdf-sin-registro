@@ -189,12 +189,20 @@ def generar_legales(marca, dominio, version):
 
     tpl = leer(TPL_LEGAL)
     pendientes = set()
+    indexables = []
     for p in datos["paginas"]:
         cuerpo = p["cuerpo"]
         meta = p["meta"]
         for k, v in campos.items():
             cuerpo = cuerpo.replace(k, v)
             meta = meta.replace(k, v)
+        # El aviso legal, la privacidad y las cookies no tienen por que
+        # indexarse; la de contacto si, y ademas conviene que Google la vea.
+        indexable = bool(p.get("indexable"))
+        url = dominio + "/" + p["slug"] + ".html"
+        if indexable:
+            indexables.append(url)
+
         html = tpl
         for k, v in {
             "{{BRAND}}": esc_attr(marca),
@@ -202,13 +210,17 @@ def generar_legales(marca, dominio, version):
             "{{TITLE}}": esc_attr(p["title"]),
             "{{H1}}": esc_attr(p["h1"]),
             "{{META}}": esc_attr(meta),
-            "{{CANONICAL}}": dominio + "/" + p["slug"] + ".html",
-            "{{FECHA}}": esc_attr(datos.get("fecha", "")),
+            "{{CANONICAL}}": url,
+            "{{ROBOTS}}": ("index, follow, max-image-preview:large"
+                           if indexable else "noindex, follow"),
+            "{{FECHA}}": esc_attr(datos.get("fecha", "")) if p.get("mostrarFecha", True) else "",
             "{{CUERPO}}": cuerpo,
             "{{ADSENSE_HEAD}}": bloque_adsense(id_editor()),
         }.items():
             html = html.replace(k, v)
 
+        # sin fecha, fuera la linea entera
+        html = html.replace("<p><strong>Última actualización:</strong> </p>\n", "")
         pendientes.update(re.findall(r"\[[A-ZÁÉÍÓÚÑ][^\]]{3,}\]", html))
         escribir(os.path.join(ROOT, p["slug"] + ".html"), html)
         print("  [ok] %-52s %d KB" % (p["slug"] + ".html", len(html) // 1024))
@@ -217,7 +229,7 @@ def generar_legales(marca, dominio, version):
         print("\n  AVISO: quedan datos del titular sin rellenar en data/legales.json:")
         for x in sorted(pendientes):
             print("    - " + x)
-    return len(datos["paginas"])
+    return len(datos["paginas"]), indexables
 
 
 def id_editor():
@@ -292,6 +304,7 @@ def generar_404(marca, dominio, version, paginas):
         "{{H1}}": "Esta página no existe",
         "{{META}}": "La página que buscas no existe. Estas son las herramientas disponibles.",
         "{{CANONICAL}}": dominio + "/404.html",
+        "{{ROBOTS}}": "noindex, follow",
         "{{FECHA}}": "",
         "{{CUERPO}}": cuerpo,
         "{{ADSENSE_HEAD}}": bloque_adsense(id_editor()),
@@ -393,6 +406,13 @@ def generar():
         generadas.append((archivo_de(p["slug"]), url))
         print("  [ok] %-52s %d KB" % (archivo_de(p["slug"]), len(html) // 1024))
 
+    # Las legales van antes que el sitemap: la de contacto entra en el.
+    print("")
+    n_legales, legales_indexables = generar_legales(marca, dominio, version)
+    generar_404(marca, dominio, version, paginas)
+    if not generar_ads_txt():
+        print("  [--] ads.txt no generado: falta publisherId en data/legales.json")
+
     # sitemap
     hoy = version if re.match(r"^\d{8}$", version) else "20260101"
     fecha = "%s-%s-%s" % (hoy[0:4], hoy[4:6], hoy[6:8])
@@ -403,17 +423,15 @@ def generar():
             "<changefreq>weekly</changefreq><priority>%s</priority></url>"
             % (url, fecha, "1.0" if i == 0 else "0.8")
         )
+    for url in legales_indexables:
+        filas.append(
+            "  <url><loc>%s</loc><lastmod>%s</lastmod>"
+            "<changefreq>yearly</changefreq><priority>0.3</priority></url>" % (url, fecha)
+        )
     sitemap = ('<?xml version="1.0" encoding="UTF-8"?>\n'
                '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
                + "\n".join(filas) + "\n</urlset>\n")
     escribir(os.path.join(ROOT, "sitemap.xml"), sitemap)
-
-    # paginas legales y 404 (noindex: fuera del sitemap a proposito)
-    print("")
-    n_legales = generar_legales(marca, dominio, version)
-    generar_404(marca, dominio, version, paginas)
-    if not generar_ads_txt():
-        print("  [--] ads.txt no generado: falta publisherId en data/legales.json")
 
     robots = ("User-agent: *\nAllow: /\n\n"
               "Sitemap: %s/sitemap.xml\n" % dominio)
