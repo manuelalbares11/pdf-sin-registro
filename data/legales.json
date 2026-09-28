@@ -6,8 +6,8 @@
     "direccion": "[DIRECCIÓN POSTAL COMPLETA]",
     "email": "[CORREO DE CONTACTO]",
     "registro": "",
-    "hosting": "[NOMBRE DEL PROVEEDOR DE ALOJAMIENTO]",
-    "hostingUbicacion": "Unión Europea",
+    "hosting": "Netlify, Inc.",
+    "hostingUbicacion": "Estados Unidos, con red de distribución global",
     "publicidad": "Google AdSense (Google Ireland Limited)",
     "jurisdiccion": "[CIUDAD DE TUS TRIBUNALES]"
   },
