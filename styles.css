@@ -313,11 +313,12 @@ dialog.editor::backdrop { background: rgba(12,12,18,.55); }
 .editor__foot .spacer { flex: 1 1 auto; }
 
 /* ---------- 8. Anuncios (huecos vacios, sin scripts) ---------- */
+/* Huecos de publicidad. Reservan su altura pero no se ven: un recuadro
+   discontinuo con la palabra ANUNCIO hace que la web parezca sin terminar.
+   Al pegar el codigo de AdSense el anuncio ocupa este espacio sin que la
+   maquetacion de un salto. */
 .ad-slot {
   display: flex; align-items: center; justify-content: center;
-  border: 1px dashed var(--line-strong); border-radius: var(--radius);
-  background: var(--surface-2); color: var(--muted);
-  font-size: .72rem; font-weight: 700; letter-spacing: .16em;
   margin: 22px auto; width: 100%; overflow: hidden;
 }
 .ad-slot--leaderboard { min-height: 90px; max-width: 728px; }
